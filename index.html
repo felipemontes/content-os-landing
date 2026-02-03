@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContentOS - Crea Contenido Viral en Segundos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        dark: { 900: '#050505', 800: '#080808', 700: '#0f0f0f', 600: '#161616', 500: '#1e1e1e' },
+                        accent: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', glow: 'rgba(59, 130, 246, 0.15)' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050505; color: #e5e5e5; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.06); }
+        .hero-glow { background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 70%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); }
+        .floating-icon { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(3deg); } }
+        .platform-icon { background: #0f0f0f; border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #60a5fa; }
+        @media (min-width: 1024px) { .platform-icon { width: 60px; height: 60px; font-size: 24px; border-radius: 16px; } }
+        .blue-glow { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); }
+        .chat-bubble { position: relative; }
+        .chat-bubble::after { content: ''; position: absolute; bottom: 0; width: 0; height: 0; }
+        .chat-bubble.sent::after { right: -6px; border-left: 6px solid #2563eb; border-bottom: 6px solid transparent; border-top: 6px solid #2563eb; }
+        .chat-bubble.received::after { left: -6px; border-right: 6px solid #1e1e1e; border-bottom: 6px solid transparent; border-top: 6px solid #1e1e1e; }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4">
+        <div class="glass rounded-2xl px-4 py-3 md:px-6 md:py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-8 h-8 md:w-9 md:h-9 bg-accent-500/10 rounded-lg md:rounded-xl flex items-center justify-center border border-accent-500/30">
+                    <i class="fas fa-bolt text-accent-400 text-xs md:text-sm"></i>
+                </div>
+                <span class="font-bold text-lg md:text-xl tracking-tight text-white">ContentOS</span>
+            </div>
+            <button class="bg-accent-600 hover:bg-accent-500 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-lg md:rounded-xl font-semibold transition text-xs md:text-sm shadow-lg shadow-accent-500/25">
+                Probar gratis
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Sección -->
+    <section class="relative pt-24 md:pt-32 pb-12 md:pb-20 px-4 overflow-hidden hero-glow">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            
+            <!-- Prueba Social con Fotos Reales -->
+            <div class="inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-6 md:mb-8">
+                <div class="flex -space-x-2">
+                    <img src="https://i.pravatar.cc/100?img=11" alt="Creator" class="w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-dark-900 object-cover">
+                    <img src="https://i.pravatar.cc/100?img=12" alt="Creator" class="w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-dark-900 object-cover">
+                    <img src="https://i.pravatar.cc/100?img=13" alt="Creator" class="w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-dark-900 object-cover">
+                </div>
+                <span class="text-[10px] md:text-xs text-gray-400">Confían <span class="text-accent-400 font-semibold">+1,000</span> creadores</span>
+            </div>
+
+            <!-- Headline Principal -->
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-[1.1] md:leading-tight text-white">
+                Crea Contenido<br class="md:hidden"> Viral<br class="hidden md:block">
+                <span class="text-accent-400">En Segundos</span>
+            </h1>
+            
+            <p class="text-gray-400 text-base md:text-lg lg:text-xl max-w-xl mx-auto mb-6 md:mb-10 leading-relaxed px-2">
+                Tu estratega creativo personal. Analiza fotograma a fotograma y adapta contenido ganador para tu audiencia.
+            </p>
+            
+            <div class="flex justify-center mb-12 md:mb-20">
+                <form action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" class="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
+                    <div class="relative w-full sm:flex-1">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                        <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3 md:py-4 pl-11 pr-4 text-white placeholder-gray-500 text-sm md:text-base focus:outline-none focus:border-accent-500/50 focus:ring-2 focus:ring-accent-500/20 transition">
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold transition shadow-lg shadow-accent-500/25 text-sm md:text-base whitespace-nowrap">
+                        Probar gratis
+                    </button>
+                </form>
+            </div>
+
+            <!-- Iconos Flotantes -->
+            <div class="absolute top-4 left-[5%] floating-icon hidden lg:block">
+                <div class="platform-icon"><i class="fab fa-instagram text-accent-400"></i></div>
+            </div>
+            <div class="absolute top-20 left-[2%] floating-icon hidden lg:block" style="animation-delay: 0.5s;">
+                <div class="platform-icon"><i class="fab fa-tiktok text-accent-400"></i></div>
+            </div>
+            <div class="absolute bottom-20 left-[5%] floating-icon hidden lg:block" style="animation-delay: 1s;">
+                <div class="platform-icon"><i class="fab fa-youtube text-accent-400"></i></div>
+            </div>
+            <div class="absolute top-10 right-[5%] floating-icon hidden lg:block" style="animation-delay: 1.5s;">
+                <div class="platform-icon"><i class="fab fa-facebook text-accent-400"></i></div>
+            </div>
+            <div class="absolute bottom-32 right-[2%] floating-icon hidden lg:block" style="animation-delay: 2s;">
+                <div class="platform-icon"><i class="fas fa-video text-accent-400"></i></div>
+            </div>
+            <div class="absolute top-40 right-[10%] floating-icon hidden lg:block" style="animation-delay: 2.5s;">
+                <div class="platform-icon"><i class="fab fa-twitter text-accent-400"></i></div>
+            </div>
+
+            <!-- Dashboard Responsive -->
+            <div class="relative mt-4 md:mt-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-w-6xl mx-auto bg-dark-900 blue-glow">
+                
+                <!-- Header Desktop -->
+                <div class="hidden md:flex bg-dark-950 border-b border-white/5 px-4 py-3 items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-arrow-left text-accent-400 text-sm"></i>
+                        <span class="text-xs text-gray-500">Estudio</span>
+                        <span class="text-xs text-gray-700">/</span>
+                        <div class="h-2 w-32 bg-accent-500/20 rounded-full"></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="h-2 w-2 rounded-full bg-accent-400"></div>
+                        <button class="bg-accent-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">Guardar</button>
+                    </div>
+                </div>
+
+                <!-- Header Mobile -->
+                <div class="flex md:hidden bg-dark-950 border-b border-white/5 px-4 py-3 items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-arrow-left text-accent-400"></i>
+                        <div class="h-2 w-24 bg-accent-500/20 rounded-full"></div>
+                    </div>
+                    <button class="bg-accent-600 text-white px-3 py-1 rounded-lg text-xs font-semibold">Guardar</button>
+                </div>
+
+                <!-- Desktop: 3 Columnas -->
+                <div class="hidden lg:grid lg:grid-cols-12 h-[580px]">
+                    <!-- Referencias -->
+                    <div class="lg:col-span-3 bg-dark-900 border-r border-white/5 flex flex-col">
+                        <div class="p-3 border-b border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-gray-400"><i class="far fa-file-alt text-accent-400 mr-2"></i>Referencias</span>
+                            <span class="bg-accent-500/10 text-accent-400 text-[10px] px-1.5 rounded">1</span>
+                        </div>
+                        <div class="flex-1 p-3 space-y-3">
+                            <div class="aspect-[9/16] bg-dark-800 rounded-lg border border-accent-500/20 relative overflow-hidden">
+                                <!-- Play button -->
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-12 h-12 rounded-full bg-accent-500/10 flex items-center justify-center border border-accent-500/30">
+                                        <i class="fas fa-play text-accent-400"></i>
+                                    </div>
+                                </div>
+                                <!-- Footer con vistas -->
+                                <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
+                                    <div class="flex items-center justify-between text-[10px] text-gray-400">
+                                        <span class="flex items-center gap-1"><i class="fas fa-eye"></i> 1.4M</span>
+                                        <span class="hover:text-accent-400 cursor-pointer">Ver <i class="fas fa-external-link-alt ml-1"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="h-2 w-full bg-white/5 rounded"></div>
+                                <div class="h-2 w-3/4 bg-white/5 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Script Central -->
+                    <div class="lg:col-span-6 bg-dark-900 flex flex-col">
+                        <div class="flex-1 overflow-y-auto p-8">
+                            <div class="max-w-lg mx-auto space-y-4">
+                                <div class="space-y-2 mb-6">
+                                    <div class="h-6 w-full bg-accent-500/20 rounded"></div>
+                                    <div class="h-6 w-5/6 bg-accent-500/20 rounded"></div>
+                                    <div class="h-6 w-4/6 bg-white/10 rounded"></div>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="h-3 w-full bg-white/10 rounded"></div>
+                                    <div class="h-3 w-11/12 bg-white/10 rounded"></div>
+                                    <div class="h-3 w-3/4 bg-white/10 rounded"></div>
+                                    <div class="h-4 w-2/3 bg-accent-500/15 rounded mt-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat IA -->
+                    <div class="lg:col-span-3 bg-dark-950 border-l border-white/5 flex flex-col">
+                        <!-- Header Chat -->
+                        <div class="p-4 border-b border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] uppercase text-accent-400 font-semibold tracking-wider flex items-center gap-2">
+                                <i class="fas fa-sparkles"></i> Asistente IA
+                            </span>
+                            <div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                                <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                                <span class="text-[10px] text-green-400">Online</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Mensajes -->
+                        <div class="flex-1 p-4 space-y-4 overflow-y-auto">
+                            <div class="flex justify-end">
+                                <div class="bg-accent-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[90%] text-xs shadow-lg shadow-accent-500/20">
+                                    que te parece el script?
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-2.5">
+                                <div class="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30 flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-sparkles text-accent-400 text-xs"></i>
+                                </div>
+                                <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-4 py-3 border border-white/10 max-w-[90%] shadow-lg">
+                                    <div class="space-y-1.5 mb-3">
+                                        <div class="h-1.5 w-full bg-white/10 rounded"></div>
+                                        <div class="h-1.5 w-5/6 bg-white/10 rounded"></div>
+                                        <div class="h-1.5 w-full bg-white/10 rounded"></div>
+                                        <div class="h-1.5 w-4/5 bg-accent-400/20 rounded"></div>
+                                    </div>
+                                    <div class="flex gap-2 mt-3 pt-2 border-t border-white/5">
+                                        <button class="px-3 py-1.5 rounded-lg bg-accent-500/10 border border-accent-500/30 text-[10px] text-accent-400 font-medium">
+                                            Optimizar
+                                        </button>
+                                        <button class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] text-gray-400">
+                                            Rehacer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Input Chat -->
+                        <div class="p-4 border-t border-white/5">
+                            <div class="flex items-center gap-2 bg-dark-800 rounded-xl p-2 border border-accent-500/20 shadow-lg">
+                                <button class="w-8 h-8 rounded-full bg-accent-500/10 flex items-center justify-center border border-accent-500/20 flex-shrink-0">
+                                    <i class="fas fa-plus text-accent-400 text-xs"></i>
+                                </button>
+                                <input type="text" placeholder="Pide cambios al guion..." class="flex-1 bg-transparent text-xs text-white placeholder-gray-600 outline-none min-w-0">
+                                <button class="w-8 h-8 rounded-full bg-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30">
+                                    <i class="fas fa-paper-plane text-white text-xs"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Selector Modelo -->
+                            <div class="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/5">
+                                <button class="flex items-center gap-1.5 text-[10px] text-accent-400 font-medium">
+                                    <div class="w-4 h-4 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30">
+                                        <i class="fas fa-sparkles text-[8px]"></i>
+                                    </div>
+                                    Claude
+                                </button>
+                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
+                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+                                    </div>
+                                    GPT-5
+                                </button>
+                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
+                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+                                    </div>
+                                    Gemini
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile: Vista Vertical App -->
+                <div class="lg:hidden bg-dark-900 h-[600px] flex flex-col">
+                    <!-- Tabs -->
+                    <div class="flex border-b border-white/5">
+                        <button class="flex-1 py-3 text-xs font-medium text-accent-400 border-b-2 border-accent-500 flex items-center justify-center gap-2">
+                            <i class="far fa-file-alt"></i>Referencias <span class="bg-accent-500/20 text-accent-400 px-1.5 rounded text-[10px]">1</span>
+                        </button>
+                        <button class="flex-1 py-3 text-xs font-medium text-gray-500 flex items-center justify-center gap-2">
+                            <i class="fas fa-sparkles"></i>Studio
+                        </button>
+                    </div>
+
+                    <!-- Scroll Content -->
+                    <div class="flex-1 overflow-y-auto">
+                        <!-- Sección Referencia -->
+                        <div class="p-4 border-b border-white/5">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="h-2 w-32 bg-white/10 rounded-full"></div>
+                                <div class="flex gap-2">
+                                    <button class="w-8 h-8 rounded-lg bg-dark-800 border border-white/5 flex items-center justify-center">
+                                        <i class="fas fa-microphone text-gray-400 text-xs"></i>
+                                    </button>
+                                    <button class="w-8 h-8 rounded-lg bg-dark-800 border border-white/5 flex items-center justify-center">
+                                        <i class="fas fa-language text-gray-400 text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Mockup -->
+                            <div class="aspect-[9/16] max-w-[200px] mx-auto bg-dark-800 rounded-xl border border-white/10 relative overflow-hidden mb-3 shadow-lg">
+                                <div class="absolute inset-0 flex flex-col">
+                                    <div class="h-12 bg-gradient-to-b from-white/10 to-transparent flex items-center px-3">
+                                        <div class="h-4 w-16 bg-white/20 rounded"></div>
+                                    </div>
+                                    <div class="flex-1 flex items-center justify-center">
+                                        <div class="w-14 h-14 rounded-full bg-accent-500/20 flex items-center justify-center border-2 border-accent-500/30 shadow-lg shadow-accent-500/20">
+                                            <i class="fas fa-play text-accent-400 text-lg ml-0.5"></i>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 bg-gradient-to-t from-black/90 to-transparent">
+                                        <div class="flex items-center justify-between text-[10px] text-gray-400 mb-2">
+                                            <span class="flex items-center gap-1"><i class="fas fa-eye"></i> 1.4M</span>
+                                            <span>Ver <i class="fas fa-external-link-alt ml-1"></i></span>
+                                        </div>
+                                        <div class="h-2 w-full bg-white/10 rounded mb-1"></div>
+                                        <div class="h-2 w-2/3 bg-white/5 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 mt-3">
+                                <div class="h-2 w-full bg-white/5 rounded"></div>
+                                <div class="h-2 w-5/6 bg-white/5 rounded"></div>
+                            </div>
+                        </div>
+
+                        <!-- Sección Script -->
+                        <div class="p-4 border-b border-white/5 bg-dark-900">
+                            <div class="space-y-3">
+                                <div class="h-5 w-full bg-accent-500/20 rounded"></div>
+                                <div class="h-5 w-11/12 bg-accent-500/20 rounded"></div>
+                                <div class="h-4 w-3/4 bg-white/10 rounded"></div>
+                                
+                                <div class="h-2.5 w-full bg-white/10 rounded mt-4"></div>
+                                <div class="h-2.5 w-5/6 bg-white/10 rounded"></div>
+                                
+                                <div class="h-3 w-2/3 bg-accent-500/15 rounded my-4"></div>
+                            </div>
+                        </div>
+
+                        <!-- Sección Chat IA (Abajo) -->
+                        <div class="p-4 bg-dark-950 min-h-[250px]">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-[10px] uppercase text-accent-400 font-semibold tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-sparkles"></i> Asistente IA
+                                </span>
+                                <div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                                    <span class="text-[10px] text-green-400">Online</span>
+                                </div>
+                            </div>
+
+                            <!-- Mensajes -->
+                            <div class="space-y-4 mb-4">
+                                <div class="flex justify-end">
+                                    <div class="bg-accent-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] text-xs shadow-lg shadow-accent-500/20">
+                                        que te parece el script?
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-2.5">
+                                    <div class="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30 flex-shrink-0 mt-0.5">
+                                        <i class="fas fa-sparkles text-accent-400 text-xs"></i>
+                                    </div>
+                                    <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-3 py-3 border border-white/10 max-w-[90%] shadow-lg">
+                                        <div class="space-y-1.5 mb-3">
+                                            <div class="h-1.5 w-full bg-white/10 rounded"></div>
+                                            <div class="h-1.5 w-5/6 bg-white/10 rounded"></div>
+                                            <div class="h-1.5 w-full bg-white/10 rounded"></div>
+                                            <div class="h-1.5 w-4/5 bg-accent-400/20 rounded"></div>
+                                        </div>
+                                        <div class="flex gap-2 mt-3 pt-2 border-t border-white/5">
+                                            <button class="px-3 py-1.5 rounded-lg bg-accent-500/10 border border-accent-500/30 text-[10px] text-accent-400 font-medium">
+                                                Optimizar
+                                            </button>
+                                            <button class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] text-gray-400">
+                                                Rehacer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Input Chat -->
+                            <div class="flex items-center gap-2 bg-dark-800 rounded-xl p-2 border border-accent-500/20 shadow-lg">
+                                <button class="w-8 h-8 rounded-full bg-accent-500/10 flex items-center justify-center border border-accent-500/20 flex-shrink-0">
+                                    <i class="fas fa-plus text-accent-400 text-xs"></i>
+                                </button>
+                                <input type="text" placeholder="Pide cambios al guion..." class="flex-1 bg-transparent text-xs text-white placeholder-gray-600 outline-none min-w-0">
+                                <button class="w-8 h-8 rounded-full bg-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30">
+                                    <i class="fas fa-paper-plane text-white text-xs"></i>
+                                </button>
+                            </div>
+
+                            <!-- Selector Modelo -->
+                            <div class="flex items-center justify-center gap-6 mt-4 pt-3 border-t border-white/5">
+                                <button class="flex items-center gap-1.5 text-[10px] text-accent-400 font-medium">
+                                    <div class="w-4 h-4 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30">
+                                        <i class="fas fa-sparkles text-[8px]"></i>
+                                    </div>
+                                    Claude
+                                </button>
+                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
+                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+                                    </div>
+                                    GPT-5
+                                </button>
+                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
+                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+                                    </div>
+                                    Gemini
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logos de Confianza -->
+    <section class="py-12 md:py-16 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-600 text-xs md:text-sm mb-6 md:mb-8">Impulsado por tecnología de IA de vanguardia</p>
+            <div class="flex flex-wrap justify-center items-center gap-6 md:gap-16 opacity-40">
+                <div class="text-base md:text-xl font-bold text-gray-500">OpenAI</div>
+                <div class="text-base md:text-xl font-bold text-gray-500">Meta</div>
+                <div class="text-base md:text-xl font-bold text-gray-500 tracking-widest">ANTHROPIC</div>
+                <div class="text-base md:text-xl font-bold text-gray-500">Google</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sistema de 4 Pasos -->
+    <section class="py-16 md:py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-20 scroll-reveal">
+                <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-accent-500/30 text-[10px] md:text-xs font-medium text-accent-400 mb-3 md:mb-4">TU FLUJO DE TRABAJO</span>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4 md:mb-6">
+                    El sistema de <span class="text-accent-400">4 pasos</span> para<br class="hidden md:block">
+                    conseguir millones de vistas
+                </h2>
+                <p class="text-gray-500 text-sm md:text-lg max-w-2xl mx-auto">
+                    De la idea al viral. Un flujo diseñado por creadores, para creadores.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 md:gap-8">
+                <!-- Paso 1 -->
+                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover scroll-reveal group">
+                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
+                        <div class="relative z-10 text-center w-full px-6 md:px-8">
+                            <div class="flex justify-center gap-2 md:gap-3 mb-3 md:mb-4">
+                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-accent-500/20 border border-accent-500/30 flex items-center justify-center group-hover:scale-110 transition shadow-lg shadow-accent-500/20">
+                                    <i class="fas fa-bookmark text-accent-400 text-lg md:text-2xl"></i>
+                                </div>
+                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center opacity-50">
+                                    <i class="fas fa-folder text-gray-600 text-lg md:text-2xl"></i>
+                                </div>
+                            </div>
+                            <div class="h-1.5 md:h-2 w-full bg-accent-500/20 rounded-full mb-1.5 md:mb-2"></div>
+                            <div class="h-1.5 md:h-2 w-3/4 bg-white/5 rounded-full mx-auto"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 01</span>
+                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
+                    </div>
+                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Crea tu biblioteca de referentes</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+                        Centraliza tus mejores referencias en un solo lugar. Construye un banco de ideas potenciado por IA que crece automáticamente.
+                    </p>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover scroll-reveal group">
+                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
+                        <div class="relative z-10 flex items-center gap-4 md:gap-6">
+                            <div class="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-accent-500/20 border border-accent-500/30 flex items-center justify-center group-hover:scale-110 transition shadow-lg shadow-accent-500/20">
+                                <i class="fas fa-fire text-accent-400 text-2xl md:text-3xl"></i>
+                            </div>
+                            <div class="flex flex-col gap-1.5 md:gap-2">
+                                <div class="h-2 md:h-3 w-20 md:w-32 bg-accent-400/40 rounded"></div>
+                                <div class="h-1.5 md:h-2 w-16 md:w-24 bg-white/10 rounded"></div>
+                                <div class="h-1.5 md:h-2 w-12 md:w-20 bg-white/10 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 02</span>
+                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
+                    </div>
+                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Encuentra videos virales</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+                        ContentOS extrae y analiza automáticamente el contenido para mostrarte exactamente cuáles han sido los videos ganadores.
+                    </p>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover scroll-reveal group">
+                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
+                        <div class="relative z-10 w-full px-6 md:px-8">
+                            <div class="flex justify-center mb-3 md:mb-4">
+                                <div class="flex -space-x-2">
+                                    <div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-dark-700 border-2 border-dark-800 flex items-center justify-center">
+                                        <i class="fas fa-sparkles text-accent-400 text-xs md:text-sm"></i>
+                                    </div>
+                                    <div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-accent-500/20 border-2 border-dark-800 flex items-center justify-center z-10">
+                                        <i class="fas fa-magic text-accent-400 text-xs md:text-sm"></i>
+                                    </div>
+                                    <div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-dark-700 border-2 border-dark-800 flex items-center justify-center">
+                                        <i class="fas fa-sparkles text-accent-400 text-xs md:text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-dark-900 rounded-lg p-3 md:p-4 border border-accent-500/20 shadow-lg shadow-accent-500/10">
+                                <div class="h-1.5 md:h-2 w-full bg-accent-400/30 rounded mb-1.5 md:mb-2"></div>
+                                <div class="h-1.5 md:h-2 w-5/6 bg-white/5 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 03</span>
+                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
+                    </div>
+                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Genera scripts con IA</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+                        Utiliza GPT-4, Claude, Gemini y los mejores modelos para crear guiones irresistibles manteniendo tu voz única.
+                    </p>
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover scroll-reveal group">
+                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
+                        <div class="relative z-10 flex gap-2 md:gap-4 px-4">
+                            <div class="w-16 md:w-24 bg-dark-900 rounded-lg p-2 md:p-3 border border-white/5">
+                                <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
+                                    <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent-400"></div>
+                                    <div class="h-1.5 md:h-2 w-6 md:w-12 bg-white/20 rounded"></div>
+                                </div>
+                                <div class="h-10 md:h-16 bg-accent-500/10 rounded border border-accent-500/20"></div>
+                            </div>
+                            <div class="w-16 md:w-24 bg-dark-900 rounded-lg p-2 md:p-3 border border-white/5 opacity-50">
+                                <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
+                                    <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gray-600"></div>
+                                    <div class="h-1.5 md:h-2 w-6 md:w-12 bg-white/10 rounded"></div>
+                                </div>
+                                <div class="h-10 md:h-16 bg-white/5 rounded border border-white/5"></div>
+                            </div>
+                            <div class="w-16 md:w-24 bg-dark-900 rounded-lg p-2 md:p-3 border border-white/5 opacity-30">
+                                <div class="h-1.5 md:h-2 w-6 md:w-12 bg-white/5 rounded mb-2 md:mb-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 04</span>
+                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
+                    </div>
+                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Planifica en Kanban</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+                        Pasa tus ideas al tablero visual: planifica, graba y publica con total claridad. Nunca pierdas el ritmo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-16 md:py-24 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 hero-glow opacity-50"></div>
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-accent-500/30 text-[10px] md:text-xs font-medium text-accent-400 mb-4 md:mb-6">EMPIEZA HOY</span>
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4 md:mb-6">
+                Deja de crear contenido<br>
+                <span class="text-accent-400">que nadie ve</span>
+            </h2>
+            <p class="text-gray-400 text-base md:text-lg max-w-xl mx-auto mb-8 md:mb-10 leading-relaxed">
+                Únete a +1,000 creadores que ya están multiplicando sus vistas con ContentOS.
+            </p>
+            
+            <div class="flex justify-center">
+                <form action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" class="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
+                    <div class="relative w-full sm:flex-1">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                        <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3 md:py-4 pl-11 pr-4 text-white placeholder-gray-500 text-sm md:text-base focus:outline-none focus:border-accent-500/50 focus:ring-2 focus:ring-accent-500/20 transition">
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold transition shadow-lg shadow-accent-500/25 text-sm md:text-base whitespace-nowrap">
+                        Probar gratis
+                    </button>
+                </form>
+            </div>
+            
+            <p class="text-gray-600 text-xs mt-4">Sin compromisos · Cancela cuando quieras</p>
+        </div>
+    </section>
+
+    <!-- Footer Simple -->
+    <footer class="border-t border-white/5 py-8 px-4 text-center">
+        <div class="flex items-center justify-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded bg-accent-500/10 flex items-center justify-center border border-accent-500/20">
+                <i class="fas fa-bolt text-accent-400 text-xs"></i>
+            </div>
+            <span class="font-bold text-gray-300">ContentOS</span>
+        </div>
+        <p class="text-gray-600 text-xs">La plataforma donde los mejores creadores diseñan sus éxitos virales.</p>
+    </footer>
+
+    <!-- Success Popup -->
+    <div id="successPopup" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closePopup()"></div>
+        <div class="relative bg-dark-800 border border-accent-500/30 rounded-3xl p-8 max-w-md w-full text-center transform scale-95 transition-transform duration-300 shadow-2xl shadow-accent-500/20" id="popupContent">
+            <button onclick="closePopup()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="w-16 h-16 bg-accent-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-accent-500/30">
+                <i class="fas fa-rocket text-accent-400 text-2xl"></i>
+            </div>
+            
+            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">
+                ¡Estás dentro! 🎉
+            </h3>
+            
+            <p class="text-accent-400 font-semibold mb-4">
+                Tu lugar está reservado
+            </p>
+            
+            <p class="text-gray-400 mb-6 leading-relaxed">
+                Serás de los <span class="text-white font-semibold">primeros en acceder</span> a ContentOS. 
+                Muy pronto recibirás un correo con acceso exclusivo y sorpresas que no querrás perderte.
+            </p>
+            
+            <div class="bg-dark-900 rounded-xl p-4 border border-white/5 mb-6">
+                <p class="text-xs text-gray-500 mb-2">MIENTRAS TANTO</p>
+                <p class="text-sm text-gray-300">Revisa tu bandeja de entrada (y spam) para confirmar tu suscripción.</p>
+            </div>
+            
+            <button onclick="closePopup()" class="w-full bg-accent-600 hover:bg-accent-500 text-white py-3 rounded-xl font-semibold transition shadow-lg shadow-accent-500/25">
+                ¡Entendido!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+        // Popup functions
+        function showPopup() {
+            const popup = document.getElementById('successPopup');
+            const content = document.getElementById('popupContent');
+            popup.classList.remove('opacity-0', 'pointer-events-none');
+            popup.classList.add('opacity-100', 'pointer-events-auto');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePopup() {
+            const popup = document.getElementById('successPopup');
+            const content = document.getElementById('popupContent');
+            popup.classList.add('opacity-0', 'pointer-events-none');
+            popup.classList.remove('opacity-100', 'pointer-events-auto');
+            content.classList.add('scale-95');
+            content.classList.remove('scale-100');
+            document.body.style.overflow = '';
+        }
+
+        // Kit form submission without redirect
+        document.querySelectorAll('form[data-sv-form]').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const emailInput = form.querySelector('input[name="email_address"]');
+                const button = form.querySelector('button[type="submit"]');
+                const originalText = button.textContent;
+                
+                // Loading state
+                button.textContent = 'Enviando...';
+                button.disabled = true;
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ email_address: emailInput.value })
+                    });
+                    
+                    // Success - Show popup
+                    emailInput.value = '';
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    showPopup();
+                    
+                } catch (error) {
+                    button.textContent = 'Error, intenta de nuevo';
+                    button.classList.add('bg-red-600');
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('bg-red-600');
+                        button.disabled = false;
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
