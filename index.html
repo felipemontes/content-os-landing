@@ -70,8 +70,8 @@
                 </div>
                 <span class="font-bold text-lg md:text-xl tracking-tight text-white">Influora</span>
             </div>
-            <button class="bg-accent-600 hover:bg-accent-500 text-white px-5 py-2 md:px-7 md:py-2.5 rounded-xl font-semibold transition-all duration-300 text-xs md:text-sm shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 flex items-center gap-2">
-                Probar gratis <i class="fas fa-arrow-right text-[10px]"></i>
+            <button onclick="openSignupModal()" class="bg-accent-600 hover:bg-accent-500 text-white px-5 py-2 md:px-7 md:py-2.5 rounded-xl font-semibold transition-all duration-300 text-xs md:text-sm shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 flex items-center gap-2">
+                Acceso anticipado <i class="fas fa-arrow-right text-[10px]"></i>
             </button>
         </div>
     </nav>
@@ -93,8 +93,9 @@
 
             <!-- Headline Principal -->
             <h1 class="reveal reveal-delay-1 text-4xl md:text-6xl lg:text-[4.5rem] font-extrabold mb-5 md:mb-7 leading-[1.08] tracking-tight text-white">
-                La nueva forma de crear<br>
-                contenido <span class="text-accent-400">para tu marca</span>
+                La nueva forma de<br>
+                crear contenido<br class="md:hidden">
+                <span class="text-accent-400">para tu marca</span>
             </h1>
             
             <p class="reveal reveal-delay-2 text-gray-400 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed">
@@ -112,7 +113,7 @@
                         <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl py-3.5 md:py-4 pl-11 pr-4 text-white placeholder-gray-600 text-sm md:text-base focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all duration-300">
                     </div>
                     <button type="submit" class="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
-                        Probar gratis <i class="fas fa-arrow-right text-xs"></i>
+                        Acceso anticipado <i class="fas fa-arrow-right text-xs"></i>
                     </button>
                 </form>
             </div>
@@ -786,7 +787,7 @@
                         <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl py-3.5 md:py-4 pl-11 pr-4 text-white placeholder-gray-600 text-sm md:text-base focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all duration-300">
                     </div>
                     <button type="submit" class="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
-                        Probar gratis <i class="fas fa-arrow-right text-xs"></i>
+                        Acceso anticipado <i class="fas fa-arrow-right text-xs"></i>
                     </button>
                 </form>
             </div>
@@ -804,6 +805,45 @@
         </div>
         <p class="text-gray-600 text-[11px] tracking-wide">Contenido viral, guiones, fotos, videos y más — todo con IA.</p>
     </footer>
+
+    <!-- Signup Modal (Nav Button) -->
+    <div id="signupModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeSignupModal()"></div>
+        <div class="relative bg-dark-800 border border-accent-500/30 rounded-3xl p-8 max-w-md w-full text-center transform scale-95 transition-transform duration-300 shadow-2xl shadow-accent-500/20" id="signupModalContent">
+            <button onclick="closeSignupModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="w-14 h-14 bg-accent-500/20 rounded-full flex items-center justify-center mx-auto mb-5 border border-accent-500/30">
+                <i class="fas fa-rocket text-accent-400 text-xl"></i>
+            </div>
+            
+            <h3 class="text-xl md:text-2xl font-bold text-white mb-2">
+                Sé de los primeros en enterarte
+            </h3>
+            
+            <p class="text-gray-400 text-sm mb-5 leading-relaxed">
+                Déjanos tu correo y te avisamos en cuanto lancemos. Los primeros en la lista tendrán acceso anticipado y beneficios exclusivos.
+            </p>
+            
+            <div class="promo-tag inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 rounded-full px-3 py-1 mb-5">
+                <i class="fas fa-fire text-amber-400 text-[10px]"></i>
+                <span class="text-[10px] md:text-[11px] font-semibold text-amber-300">Créditos dobles para los primeros en suscribirse</span>
+            </div>
+            
+            <form action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" class="flex flex-col gap-3 w-full">
+                <div class="relative w-full">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                    <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all duration-300">
+                </div>
+                <button type="submit" class="w-full bg-accent-600 hover:bg-accent-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 text-sm whitespace-nowrap flex items-center justify-center gap-2">
+                    Quiero acceso anticipado <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </form>
+            
+            <p class="text-gray-600 text-[11px] mt-4">Sin spam. Solo novedades importantes.</p>
+        </div>
+    </div>
 
     <!-- Success Popup -->
     <div id="successPopup" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
@@ -1011,6 +1051,27 @@
         }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+        // ─── Signup Modal ───
+        function openSignupModal() {
+            const modal = document.getElementById('signupModal');
+            const content = document.getElementById('signupModalContent');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeSignupModal() {
+            const modal = document.getElementById('signupModal');
+            const content = document.getElementById('signupModalContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            content.classList.add('scale-95');
+            content.classList.remove('scale-100');
+            document.body.style.overflow = '';
+        }
+
         // ─── Popup ───
         function showPopup() {
             const popup = document.getElementById('successPopup');
@@ -1056,6 +1117,7 @@
                     button.innerHTML = originalHTML;
                     button.disabled = false;
                     button.style.opacity = '1';
+                    closeSignupModal();
                     showPopup();
                     
                 } catch (error) {
