@@ -1,1138 +1,1267 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Influora - La Nueva Forma de Crear Contenido</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        dark: { 900: '#050505', 800: '#080808', 700: '#0f0f0f', 600: '#161616', 500: '#1e1e1e' },
-                        accent: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', glow: 'rgba(59, 130, 246, 0.15)' }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { background-color: #050505; color: #e5e5e5; }
-        /* Subtle grain overlay */
-        body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.015; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); }
-        .hero-glow { background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(59, 130, 246, 0.07) 0%, transparent 70%); }
-        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 25px 50px rgba(59, 130, 246, 0.12); border-color: rgba(59, 130, 246, 0.2); }
-        .blue-glow { box-shadow: 0 0 40px rgba(59, 130, 246, 0.15), 0 0 80px rgba(59, 130, 246, 0.05); }
-        .chat-bubble { position: relative; }
-        .chat-bubble::after { content: ''; position: absolute; bottom: 0; width: 0; height: 0; }
-        .chat-bubble.sent::after { right: -6px; border-left: 6px solid #2563eb; border-bottom: 6px solid transparent; border-top: 6px solid #2563eb; }
-        .chat-bubble.received::after { left: -6px; border-right: 6px solid #1e1e1e; border-bottom: 6px solid transparent; border-top: 6px solid #1e1e1e; }
-        /* Canvas node styles */
-        .canvas-node { background: rgba(8, 8, 8, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 10px; backdrop-filter: blur(8px); }
-        .canvas-node-header { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(156, 163, 175, 0.6); font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
-        .canvas-node-header span { color: rgba(107, 114, 128, 0.4); cursor: pointer; }
-        .canvas-node-btn { width: 100%; margin-top: 6px; padding: 5px 0; border-radius: 8px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 10px; color: rgba(156, 163, 175, 0.5); cursor: pointer; text-align: center; }
-        .connection-line { stroke: rgba(74, 222, 128, 0.35); stroke-width: 2; fill: none; }
-        .connection-dot { fill: rgba(74, 222, 128, 0.5); }
-        .canvas-glow { box-shadow: 0 0 60px rgba(74, 222, 128, 0.08), 0 0 120px rgba(74, 222, 128, 0.04); }
-        /* Particles canvas */
-        #particles-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-        /* Scroll reveal animations */
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        /* Dashboard float animation */
-        .dashboard-float { animation: dashFloat 6s ease-in-out infinite; }
-        @keyframes dashFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        /* Promo tag bounce */
-        .promo-tag { animation: promoBounce 2s ease-in-out infinite; }
-        @keyframes promoBounce { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kloutt — Design Workflows for AI Image Generation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-2: #1a1a1e;
+      --border: #222228;
+      --text: #f0eeeb;
+      --text-muted: #8a8a8f;
+      --accent: #c8ff00;
+      --accent-dim: rgba(200, 255, 0, 0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Noise Texture Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      background: rgba(10, 10, 11, 0.8);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 42px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 10px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(200, 255, 0, 0.25); }
+
+    /* ── Language Toggle ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 3px;
+      gap: 0;
+      cursor: pointer;
+    }
+
+    .lang-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 7px 14px;
+      border: none;
+      border-radius: 100px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--text);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 60%, rgba(200, 255, 0, 0.09) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 80% at 80% 30%, rgba(120, 80, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 60% at 50% 80%, rgba(200, 255, 0, 0.07) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-mesh::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: 
+        radial-gradient(circle at 25% 35%, rgba(200, 255, 0, 0.12) 0%, transparent 30%),
+        radial-gradient(circle at 75% 65%, rgba(100, 60, 255, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 50% 20%, rgba(0, 200, 150, 0.04) 0%, transparent 25%);
+      animation: meshFloat 20s ease-in-out infinite alternate;
+    }
+
+    .hero-mesh::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8ff00' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    @keyframes meshFloat {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-2%, 2%) rotate(1deg); }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(200, 255, 0, 0.15);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 40px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 800px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    /* ── Email Form ── */
+    .email-form {
+      display: flex;
+      gap: 0;
+      max-width: 460px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px;
+      transition: border-color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .email-form:focus-within {
+      border-color: rgba(200, 255, 0, 0.4);
+      box-shadow: 0 0 40px rgba(200, 255, 0, 0.06);
+    }
+
+    .email-form input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      padding: 14px 20px;
+      outline: none;
+    }
+
+    .email-form input::placeholder { color: var(--text-muted); }
+
+    .email-form button {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .email-form button:hover { box-shadow: 0 0 24px rgba(200, 255, 0, 0.3); }
+
+    .form-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* ── Showcase Section ── */
+    .showcase {
+      padding: 40px 24px 100px;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: -0.02em;
+      margin-bottom: 60px;
+      line-height: 1.15;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── Image Grid ── */
+    .image-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .grid-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+
+    .grid-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .grid-item.wide {
+      grid-column: span 2;
+      aspect-ratio: 3/2;
+    }
+
+    .grid-item.full {
+      grid-column: span 3;
+      aspect-ratio: 21/9;
+    }
+
+    .grid-item .placeholder-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .grid-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,11,0.8) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+    }
+
+    .grid-item:hover .overlay { opacity: 1; }
+
+    .overlay-tag {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(200, 255, 0, 0.1);
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(200, 255, 0, 0.2);
+    }
+
+    /* ── Placeholder Art ── */
+    .art {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .art-5 { background: linear-gradient(155deg, #0a0a1a 0%, #0f1a2e 50%, #1a2e4e 100%); }
+    .art-5::after {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(80, 200, 255, 0.06) 0%, transparent 50%);
+    }
+
+    .art-label {
+      position: absolute;
+      z-index: 2;
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(20px, 3vw, 32px);
+      font-style: italic;
+      color: rgba(240, 238, 235, 0.15);
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* ── Features Strip ── */
+    .features {
+      padding: 120px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .features-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      text-align: center;
+    }
+
+    .feature-item h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .feature-item p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(200, 255, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 24px;
+    }
+
+    /* ── Bottom CTA ── */
+    .bottom-cta {
+      padding: 120px 24px;
+      text-align: center;
+    }
+
+    .bottom-cta h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .bottom-cta h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .bottom-cta p {
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--text-muted);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav {
+        padding: 14px 16px;
+      }
+      .logo { font-size: 34px; }
+      .nav-cta {
+        padding: 9px 16px;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+      }
+      .nav-right { gap: 8px; }
+      .lang-toggle { padding: 2px; }
+      .lang-btn { padding: 5px 9px; font-size: 10px; }
+
+      .hero {
+        min-height: auto;
+        padding: 110px 20px 50px;
+      }
+
+      .badge {
+        font-size: 10px;
+        padding: 6px 14px;
+        margin-bottom: 28px;
+        letter-spacing: 0.06em;
+      }
+
+      h1 { margin-bottom: 20px; }
+
+      .hero-sub {
+        font-size: 15px;
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
+
+      .email-form {
+        flex-direction: column;
+        border-radius: 16px;
+        padding: 4px;
+      }
+      .email-form input {
+        padding: 16px;
+        text-align: center;
+        font-size: 14px;
+      }
+      .email-form button {
+        border-radius: 12px;
+        padding: 16px;
+        font-size: 14px;
+      }
+
+      .form-note { font-size: 12px; margin-top: 12px; }
+
+      .showcase { padding: 30px 16px 60px; }
+
+      .section-label { font-size: 11px; margin-bottom: 12px; }
+      .section-title { margin-bottom: 32px; }
+
+      .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .grid-item { border-radius: 12px; }
+      .grid-item.wide { grid-column: span 2; }
+      .grid-item.full {
+        grid-column: span 2;
+        aspect-ratio: 16/9;
+      }
+      .grid-item .overlay { padding: 12px; }
+      .overlay-tag { font-size: 10px; padding: 5px 10px; }
+
+      .features { padding: 60px 20px; }
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .feature-icon { width: 52px; height: 52px; font-size: 20px; margin-bottom: 16px; }
+      .feature-item h3 { font-size: 24px; margin-bottom: 10px; }
+      .feature-item p { font-size: 14px; }
+
+      .bottom-cta { padding: 60px 20px 80px; }
+      .bottom-cta p { margin-bottom: 28px; font-size: 15px; }
+
+      footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+        padding: 28px 20px;
+      }
+      .footer-links { gap: 20px; }
+    }
+
+    @media (max-width: 380px) {
+      .nav-cta { padding: 8px 12px; font-size: 10px; }
+      .lang-btn { padding: 4px 7px; font-size: 9px; }
+      h1 { font-size: 38px; }
+      .hero-sub { font-size: 14px; }
+    }
+
+    /* ── Promo Tag ── */
+    .promo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(200, 255, 0, 0.06);
+      border: 1px solid rgba(200, 255, 0, 0.25);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(200, 255, 0, 0.06), inset 0 0 20px rgba(200, 255, 0, 0.03);
+      animation: promoGlow 3s ease-in-out infinite;
+    }
+
+    .promo-tag::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(200, 255, 0, 0.12), transparent);
+      animation: promoShimmer 3s ease-in-out infinite;
+    }
+
+    .promo-tag .promo-icon {
+      font-style: normal;
+      font-size: 14px;
+      filter: drop-shadow(0 0 4px rgba(200, 255, 0, 0.5));
+    }
+
+    .promo-tag .promo-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(200, 255, 0, 0.15);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-left: 2px;
+    }
+
+    @keyframes promoShimmer {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+
+    @keyframes promoGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(200, 255, 0, 0.06), inset 0 0 20px rgba(200, 255, 0, 0.03); }
+      50% { box-shadow: 0 0 28px rgba(200, 255, 0, 0.1), inset 0 0 20px rgba(200, 255, 0, 0.04); }
+    }
+
+    @media (max-width: 768px) {
+      .promo-tag { font-size: 12px; padding: 8px 16px; gap: 8px; }
+      .promo-tag .promo-count { font-size: 10px; padding: 2px 6px; }
+    }
+
+    /* ── Scroll Animations ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Modal / Popup Overlay ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+    }
+
+    .modal-content {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--surface-2);
+      border-radius: 50%;
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--text);
+      background: var(--border);
+    }
+
+    .modal-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid rgba(200, 255, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 26px;
+    }
+
+    .modal-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .modal-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .modal-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .modal-form input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .modal-form input::placeholder { color: var(--text-muted); }
+
+    .modal-form input:focus {
+      border-color: rgba(200, 255, 0, 0.4);
+      box-shadow: 0 0 20px rgba(200, 255, 0, 0.05);
+    }
+
+    .modal-form button {
+      width: 100%;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-form button:hover {
+      box-shadow: 0 0 30px rgba(200, 255, 0, 0.25);
+    }
+
+    .modal-form button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .modal-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .modal-highlight-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .modal-highlight-box .label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .modal-highlight-box p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .modal-cta-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-cta-btn:hover {
+      box-shadow: 0 0 30px rgba(200, 255, 0, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        padding: 36px 24px;
+        border-radius: 20px;
+      }
+      .modal-title { font-size: 24px; }
+    }
+  </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden">
+<body>
 
-    <!-- Navegación -->
-    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-5xl px-4">
-        <div class="glass rounded-2xl px-5 py-3 md:px-8 md:py-4 flex items-center justify-between">
-            <div class="flex items-center gap-2.5 md:gap-3">
-                <div class="w-8 h-8 md:w-9 md:h-9 bg-accent-500/10 rounded-lg flex items-center justify-center border border-accent-500/20">
-                    <i class="fas fa-bolt text-accent-400 text-xs md:text-sm"></i>
-                </div>
-                <span class="font-bold text-lg md:text-xl tracking-tight text-white">Influora</span>
-            </div>
-            <button onclick="openSignupModal()" class="bg-accent-600 hover:bg-accent-500 text-white px-5 py-2 md:px-7 md:py-2.5 rounded-xl font-semibold transition-all duration-300 text-xs md:text-sm shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 flex items-center gap-2">
-                Acceso anticipado <i class="fas fa-arrow-right text-[10px]"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero Sección -->
-    <section class="relative pt-28 md:pt-40 pb-16 md:pb-28 px-4 overflow-hidden">
-        <!-- Particles Background -->
-        <canvas id="particles-canvas"></canvas>
-        <!-- Subtle glow -->
-        <div class="absolute inset-0 hero-glow pointer-events-none"></div>
-        
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            
-            <!-- Badge like MediaSort -->
-            <div class="reveal inline-flex items-center gap-2 mb-8 md:mb-10">
-                <span class="bg-accent-600 text-white text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-md">Hecho para</span>
-                <span class="text-gray-400 text-xs md:text-sm">Creadores y Marcas</span>
-            </div>
-
-            <!-- Headline Principal -->
-            <h1 class="reveal reveal-delay-1 text-4xl md:text-6xl lg:text-[4.5rem] font-extrabold mb-5 md:mb-7 leading-[1.08] tracking-tight text-white">
-                La nueva forma de<br>
-                crear contenido<br class="md:hidden">
-                <span class="text-accent-400">para tu marca</span>
-            </h1>
-            
-            <p class="reveal reveal-delay-2 text-gray-400 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed">
-                Encuentra contenido viral, genera guiones con IA, crea sesiones de fotos profesionales y videos — todo desde una sola plataforma.
-            </p>
-            
-            <div class="reveal reveal-delay-3 flex flex-col items-center mb-16 md:mb-24">
-                <div class="promo-tag inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 rounded-full px-3 py-1 mb-4">
-                    <i class="fas fa-fire text-amber-400 text-[10px]"></i>
-                    <span class="text-[10px] md:text-[11px] font-semibold text-amber-300">Créditos dobles para los primeros en suscribirse</span>
-                </div>
-                <form action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" class="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
-                    <div class="relative w-full sm:flex-1">
-                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                        <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl py-3.5 md:py-4 pl-11 pr-4 text-white placeholder-gray-600 text-sm md:text-base focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all duration-300">
-                    </div>
-                    <button type="submit" class="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
-                        Acceso anticipado <i class="fas fa-arrow-right text-xs"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Dashboard Responsive -->
-            <div class="reveal reveal-delay-4 relative mt-4 md:mt-8 rounded-2xl overflow-hidden border border-white/[0.08] shadow-2xl max-w-6xl mx-auto bg-dark-900 blue-glow dashboard-float">
-                
-                <!-- Header Desktop -->
-                <div class="hidden md:flex bg-dark-950 border-b border-white/5 px-4 py-3 items-center justify-between">
-                    <div class="flex items-center gap-4">
-                        <i class="fas fa-arrow-left text-accent-400 text-sm"></i>
-                        <span class="text-xs text-gray-500">Estudio</span>
-                        <span class="text-xs text-gray-700">/</span>
-                        <div class="h-2 w-32 bg-accent-500/20 rounded-full"></div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="h-2 w-2 rounded-full bg-accent-400"></div>
-                        <button class="bg-accent-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">Guardar</button>
-                    </div>
-                </div>
-
-                <!-- Header Mobile -->
-                <div class="flex md:hidden bg-dark-950 border-b border-white/5 px-4 py-3 items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-arrow-left text-accent-400"></i>
-                        <div class="h-2 w-24 bg-accent-500/20 rounded-full"></div>
-                    </div>
-                    <button class="bg-accent-600 text-white px-3 py-1 rounded-lg text-xs font-semibold">Guardar</button>
-                </div>
-
-                <!-- Desktop: 3 Columnas -->
-                <div class="hidden lg:grid lg:grid-cols-12 h-[580px]">
-                    <!-- Referencias -->
-                    <div class="lg:col-span-3 bg-dark-900 border-r border-white/5 flex flex-col">
-                        <div class="p-3 border-b border-white/5 flex items-center justify-between">
-                            <span class="text-xs text-gray-400"><i class="far fa-file-alt text-accent-400 mr-2"></i>Referencias</span>
-                            <span class="bg-accent-500/10 text-accent-400 text-[10px] px-1.5 rounded">1</span>
-                        </div>
-                        <div class="flex-1 p-3 space-y-3">
-                            <div class="aspect-[9/16] bg-dark-800 rounded-lg border border-accent-500/20 relative overflow-hidden">
-                                <!-- Play button -->
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-12 h-12 rounded-full bg-accent-500/10 flex items-center justify-center border border-accent-500/30">
-                                        <i class="fas fa-play text-accent-400"></i>
-                                    </div>
-                                </div>
-                                <!-- Footer con vistas -->
-                                <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
-                                    <div class="flex items-center justify-between text-[10px] text-gray-400">
-                                        <span class="flex items-center gap-1"><i class="fas fa-eye"></i> 1.4M</span>
-                                        <span class="hover:text-accent-400 cursor-pointer">Ver <i class="fas fa-external-link-alt ml-1"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="h-2 w-full bg-white/5 rounded"></div>
-                                <div class="h-2 w-3/4 bg-white/5 rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Script Central -->
-                    <div class="lg:col-span-6 bg-dark-900 flex flex-col">
-                        <div class="flex-1 overflow-y-auto p-8">
-                            <div class="max-w-lg mx-auto space-y-4">
-                                <div class="space-y-2 mb-6">
-                                    <div class="h-6 w-full bg-accent-500/20 rounded"></div>
-                                    <div class="h-6 w-5/6 bg-accent-500/20 rounded"></div>
-                                    <div class="h-6 w-4/6 bg-white/10 rounded"></div>
-                                </div>
-                                <div class="space-y-3">
-                                    <div class="h-3 w-full bg-white/10 rounded"></div>
-                                    <div class="h-3 w-11/12 bg-white/10 rounded"></div>
-                                    <div class="h-3 w-3/4 bg-white/10 rounded"></div>
-                                    <div class="h-4 w-2/3 bg-accent-500/15 rounded mt-4"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chat IA -->
-                    <div class="lg:col-span-3 bg-dark-950 border-l border-white/5 flex flex-col">
-                        <!-- Header Chat -->
-                        <div class="p-4 border-b border-white/5 flex items-center justify-between">
-                            <span class="text-[10px] uppercase text-accent-400 font-semibold tracking-wider flex items-center gap-2">
-                                <i class="fas fa-sparkles"></i> Asistente IA
-                            </span>
-                            <div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-                                <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                                <span class="text-[10px] text-green-400">Online</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Mensajes -->
-                        <div class="flex-1 p-4 space-y-4 overflow-y-auto">
-                            <div class="flex justify-end">
-                                <div class="bg-accent-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[90%] text-xs shadow-lg shadow-accent-500/20">
-                                    que te parece el script?
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start gap-2.5">
-                                <div class="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30 flex-shrink-0 mt-0.5">
-                                    <i class="fas fa-sparkles text-accent-400 text-xs"></i>
-                                </div>
-                                <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-4 py-3 border border-white/10 max-w-[90%] shadow-lg">
-                                    <div class="space-y-1.5 mb-3">
-                                        <div class="h-1.5 w-full bg-white/10 rounded"></div>
-                                        <div class="h-1.5 w-5/6 bg-white/10 rounded"></div>
-                                        <div class="h-1.5 w-full bg-white/10 rounded"></div>
-                                        <div class="h-1.5 w-4/5 bg-accent-400/20 rounded"></div>
-                                    </div>
-                                    <div class="flex gap-2 mt-3 pt-2 border-t border-white/5">
-                                        <button class="px-3 py-1.5 rounded-lg bg-accent-500/10 border border-accent-500/30 text-[10px] text-accent-400 font-medium">
-                                            Optimizar
-                                        </button>
-                                        <button class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] text-gray-400">
-                                            Rehacer
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Input Chat -->
-                        <div class="p-4 border-t border-white/5">
-                            <div class="flex items-center gap-2 bg-dark-800 rounded-xl p-2 border border-accent-500/20 shadow-lg">
-                                <button class="w-8 h-8 rounded-full bg-accent-500/10 flex items-center justify-center border border-accent-500/20 flex-shrink-0">
-                                    <i class="fas fa-plus text-accent-400 text-xs"></i>
-                                </button>
-                                <input type="text" placeholder="Pide cambios al guion..." class="flex-1 bg-transparent text-xs text-white placeholder-gray-600 outline-none min-w-0">
-                                <button class="w-8 h-8 rounded-full bg-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30">
-                                    <i class="fas fa-paper-plane text-white text-xs"></i>
-                                </button>
-                            </div>
-                            
-                            <!-- Selector Modelo -->
-                            <div class="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/5">
-                                <button class="flex items-center gap-1.5 text-[10px] text-accent-400 font-medium">
-                                    <div class="w-4 h-4 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30">
-                                        <i class="fas fa-sparkles text-[8px]"></i>
-                                    </div>
-                                    Claude
-                                </button>
-                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
-                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-                                    </div>
-                                    GPT-5
-                                </button>
-                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
-                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-                                    </div>
-                                    Gemini
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mobile: Vista Vertical App -->
-                <div class="lg:hidden bg-dark-900 h-[600px] flex flex-col">
-                    <!-- Tabs -->
-                    <div class="flex border-b border-white/5">
-                        <button class="flex-1 py-3 text-xs font-medium text-accent-400 border-b-2 border-accent-500 flex items-center justify-center gap-2">
-                            <i class="far fa-file-alt"></i>Referencias <span class="bg-accent-500/20 text-accent-400 px-1.5 rounded text-[10px]">1</span>
-                        </button>
-                        <button class="flex-1 py-3 text-xs font-medium text-gray-500 flex items-center justify-center gap-2">
-                            <i class="fas fa-sparkles"></i>Studio
-                        </button>
-                    </div>
-
-                    <!-- Scroll Content -->
-                    <div class="flex-1 overflow-y-auto">
-                        <!-- Sección Referencia -->
-                        <div class="p-4 border-b border-white/5">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="h-2 w-32 bg-white/10 rounded-full"></div>
-                                <div class="flex gap-2">
-                                    <button class="w-8 h-8 rounded-lg bg-dark-800 border border-white/5 flex items-center justify-center">
-                                        <i class="fas fa-microphone text-gray-400 text-xs"></i>
-                                    </button>
-                                    <button class="w-8 h-8 rounded-lg bg-dark-800 border border-white/5 flex items-center justify-center">
-                                        <i class="fas fa-language text-gray-400 text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- Video Mockup -->
-                            <div class="aspect-[9/16] max-w-[200px] mx-auto bg-dark-800 rounded-xl border border-white/10 relative overflow-hidden mb-3 shadow-lg">
-                                <div class="absolute inset-0 flex flex-col">
-                                    <div class="h-12 bg-gradient-to-b from-white/10 to-transparent flex items-center px-3">
-                                        <div class="h-4 w-16 bg-white/20 rounded"></div>
-                                    </div>
-                                    <div class="flex-1 flex items-center justify-center">
-                                        <div class="w-14 h-14 rounded-full bg-accent-500/20 flex items-center justify-center border-2 border-accent-500/30 shadow-lg shadow-accent-500/20">
-                                            <i class="fas fa-play text-accent-400 text-lg ml-0.5"></i>
-                                        </div>
-                                    </div>
-                                    <div class="p-3 bg-gradient-to-t from-black/90 to-transparent">
-                                        <div class="flex items-center justify-between text-[10px] text-gray-400 mb-2">
-                                            <span class="flex items-center gap-1"><i class="fas fa-eye"></i> 1.4M</span>
-                                            <span>Ver <i class="fas fa-external-link-alt ml-1"></i></span>
-                                        </div>
-                                        <div class="h-2 w-full bg-white/10 rounded mb-1"></div>
-                                        <div class="h-2 w-2/3 bg-white/5 rounded"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2 mt-3">
-                                <div class="h-2 w-full bg-white/5 rounded"></div>
-                                <div class="h-2 w-5/6 bg-white/5 rounded"></div>
-                            </div>
-                        </div>
-
-                        <!-- Sección Script -->
-                        <div class="p-4 border-b border-white/5 bg-dark-900">
-                            <div class="space-y-3">
-                                <div class="h-5 w-full bg-accent-500/20 rounded"></div>
-                                <div class="h-5 w-11/12 bg-accent-500/20 rounded"></div>
-                                <div class="h-4 w-3/4 bg-white/10 rounded"></div>
-                                
-                                <div class="h-2.5 w-full bg-white/10 rounded mt-4"></div>
-                                <div class="h-2.5 w-5/6 bg-white/10 rounded"></div>
-                                
-                                <div class="h-3 w-2/3 bg-accent-500/15 rounded my-4"></div>
-                            </div>
-                        </div>
-
-                        <!-- Sección Chat IA (Abajo) -->
-                        <div class="p-4 bg-dark-950 min-h-[250px]">
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="text-[10px] uppercase text-accent-400 font-semibold tracking-wider flex items-center gap-2">
-                                    <i class="fas fa-sparkles"></i> Asistente IA
-                                </span>
-                                <div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                                    <span class="text-[10px] text-green-400">Online</span>
-                                </div>
-                            </div>
-
-                            <!-- Mensajes -->
-                            <div class="space-y-4 mb-4">
-                                <div class="flex justify-end">
-                                    <div class="bg-accent-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] text-xs shadow-lg shadow-accent-500/20">
-                                        que te parece el script?
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start gap-2.5">
-                                    <div class="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30 flex-shrink-0 mt-0.5">
-                                        <i class="fas fa-sparkles text-accent-400 text-xs"></i>
-                                    </div>
-                                    <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-3 py-3 border border-white/10 max-w-[90%] shadow-lg">
-                                        <div class="space-y-1.5 mb-3">
-                                            <div class="h-1.5 w-full bg-white/10 rounded"></div>
-                                            <div class="h-1.5 w-5/6 bg-white/10 rounded"></div>
-                                            <div class="h-1.5 w-full bg-white/10 rounded"></div>
-                                            <div class="h-1.5 w-4/5 bg-accent-400/20 rounded"></div>
-                                        </div>
-                                        <div class="flex gap-2 mt-3 pt-2 border-t border-white/5">
-                                            <button class="px-3 py-1.5 rounded-lg bg-accent-500/10 border border-accent-500/30 text-[10px] text-accent-400 font-medium">
-                                                Optimizar
-                                            </button>
-                                            <button class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] text-gray-400">
-                                                Rehacer
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Input Chat -->
-                            <div class="flex items-center gap-2 bg-dark-800 rounded-xl p-2 border border-accent-500/20 shadow-lg">
-                                <button class="w-8 h-8 rounded-full bg-accent-500/10 flex items-center justify-center border border-accent-500/20 flex-shrink-0">
-                                    <i class="fas fa-plus text-accent-400 text-xs"></i>
-                                </button>
-                                <input type="text" placeholder="Pide cambios al guion..." class="flex-1 bg-transparent text-xs text-white placeholder-gray-600 outline-none min-w-0">
-                                <button class="w-8 h-8 rounded-full bg-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/30">
-                                    <i class="fas fa-paper-plane text-white text-xs"></i>
-                                </button>
-                            </div>
-
-                            <!-- Selector Modelo -->
-                            <div class="flex items-center justify-center gap-6 mt-4 pt-3 border-t border-white/5">
-                                <button class="flex items-center gap-1.5 text-[10px] text-accent-400 font-medium">
-                                    <div class="w-4 h-4 rounded-full bg-accent-500/20 flex items-center justify-center border border-accent-500/30">
-                                        <i class="fas fa-sparkles text-[8px]"></i>
-                                    </div>
-                                    Claude
-                                </button>
-                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
-                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-                                    </div>
-                                    GPT-5
-                                </button>
-                                <button class="flex items-center gap-1.5 text-[10px] text-gray-600">
-                                    <div class="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
-                                    </div>
-                                    Gemini
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Logos de Confianza -->
-    <section class="py-14 md:py-20 border-y border-white/[0.04]">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="reveal text-gray-600 text-[11px] md:text-xs uppercase tracking-[0.2em] mb-8 md:mb-10">Impulsado por tecnología de IA de vanguardia</p>
-            <div class="reveal reveal-delay-1 flex flex-wrap justify-center items-center gap-8 md:gap-20 opacity-30">
-                <div class="text-base md:text-xl font-bold text-gray-500 tracking-wide">OpenAI</div>
-                <div class="text-base md:text-xl font-bold text-gray-500 tracking-wide">Meta</div>
-                <div class="text-base md:text-xl font-bold text-gray-500 tracking-[0.2em]">ANTHROPIC</div>
-                <div class="text-base md:text-xl font-bold text-gray-500 tracking-wide">Google</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sistema de 4 Pasos -->
-    <section class="py-20 md:py-32 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-14 md:mb-24 reveal">
-                <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-accent-500/30 text-[10px] md:text-xs font-medium text-accent-400 mb-3 md:mb-4">TU FLUJO DE TRABAJO</span>
-                <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4 md:mb-6">
-                    El sistema de <span class="text-accent-400">4 pasos</span> para<br class="hidden md:block">
-                    conseguir millones de vistas
-                </h2>
-                <p class="text-gray-500 text-sm md:text-lg max-w-2xl mx-auto">
-                    De la idea al viral. Un flujo diseñado por creadores, para creadores.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-5 md:gap-8">
-                <!-- Paso 1 -->
-                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover reveal group">
-                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
-                        <div class="relative z-10 text-center w-full px-6 md:px-8">
-                            <div class="flex justify-center gap-2 md:gap-3 mb-3 md:mb-4">
-                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-accent-500/20 border border-accent-500/30 flex items-center justify-center group-hover:scale-110 transition shadow-lg shadow-accent-500/20">
-                                    <i class="fas fa-bookmark text-accent-400 text-lg md:text-2xl"></i>
-                                </div>
-                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center opacity-50">
-                                    <i class="fas fa-folder text-gray-600 text-lg md:text-2xl"></i>
-                                </div>
-                            </div>
-                            <div class="h-1.5 md:h-2 w-full bg-accent-500/20 rounded-full mb-1.5 md:mb-2"></div>
-                            <div class="h-1.5 md:h-2 w-3/4 bg-white/5 rounded-full mx-auto"></div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 01</span>
-                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
-                    </div>
-                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Crea tu biblioteca de referentes</h3>
-                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
-                        Centraliza tus mejores referencias en un solo lugar. Construye un banco de ideas potenciado por IA que crece automáticamente.
-                    </p>
-                </div>
-
-                <!-- Paso 2 -->
-                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover reveal group">
-                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
-                        <div class="relative z-10 flex items-center gap-4 md:gap-6">
-                            <div class="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-accent-500/20 border border-accent-500/30 flex items-center justify-center group-hover:scale-110 transition shadow-lg shadow-accent-500/20">
-                                <i class="fas fa-fire text-accent-400 text-2xl md:text-3xl"></i>
-                            </div>
-                            <div class="flex flex-col gap-1.5 md:gap-2">
-                                <div class="h-2 md:h-3 w-20 md:w-32 bg-accent-400/40 rounded"></div>
-                                <div class="h-1.5 md:h-2 w-16 md:w-24 bg-white/10 rounded"></div>
-                                <div class="h-1.5 md:h-2 w-12 md:w-20 bg-white/10 rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 02</span>
-                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
-                    </div>
-                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Encuentra videos virales</h3>
-                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
-                        Influora extrae y analiza automáticamente el contenido para mostrarte exactamente cuáles han sido los videos ganadores.
-                    </p>
-                </div>
-
-                <!-- Paso 3 -->
-                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover reveal group">
-                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
-                        <div class="relative z-10 w-full px-6 md:px-8">
-                            <div class="flex justify-center mb-3 md:mb-4">
-                                <div class="flex -space-x-2">
-                                    <div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-dark-700 border-2 border-dark-800 flex items-center justify-center">
-                                        <i class="fas fa-sparkles text-accent-400 text-xs md:text-sm"></i>
-                                    </div>
-                                    <div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-accent-500/20 border-2 border-dark-800 flex items-center justify-center z-10">
-                                        <i class="fas fa-magic text-accent-400 text-xs md:text-sm"></i>
-                                    </div>
-                                    <div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-dark-700 border-2 border-dark-800 flex items-center justify-center">
-                                        <i class="fas fa-sparkles text-accent-400 text-xs md:text-sm"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-dark-900 rounded-lg p-3 md:p-4 border border-accent-500/20 shadow-lg shadow-accent-500/10">
-                                <div class="h-1.5 md:h-2 w-full bg-accent-400/30 rounded mb-1.5 md:mb-2"></div>
-                                <div class="h-1.5 md:h-2 w-5/6 bg-white/5 rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 03</span>
-                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
-                    </div>
-                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Genera scripts con IA</h3>
-                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
-                        Utiliza GPT-5, Claude, Gemini y los mejores modelos para crear guiones irresistibles manteniendo tu voz única.
-                    </p>
-                </div>
-
-                <!-- Paso 4 -->
-                <div class="glass rounded-2xl md:rounded-3xl p-6 md:p-8 card-hover reveal group">
-                    <div class="rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 bg-dark-800 border border-white/5 h-48 md:h-64 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent"></div>
-                        <div class="relative z-10 flex gap-2 md:gap-4 px-4">
-                            <div class="w-16 md:w-24 bg-dark-900 rounded-lg p-2 md:p-3 border border-white/5">
-                                <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
-                                    <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent-400"></div>
-                                    <div class="h-1.5 md:h-2 w-6 md:w-12 bg-white/20 rounded"></div>
-                                </div>
-                                <div class="h-10 md:h-16 bg-accent-500/10 rounded border border-accent-500/20"></div>
-                            </div>
-                            <div class="w-16 md:w-24 bg-dark-900 rounded-lg p-2 md:p-3 border border-white/5 opacity-50">
-                                <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
-                                    <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gray-600"></div>
-                                    <div class="h-1.5 md:h-2 w-6 md:w-12 bg-white/10 rounded"></div>
-                                </div>
-                                <div class="h-10 md:h-16 bg-white/5 rounded border border-white/5"></div>
-                            </div>
-                            <div class="w-16 md:w-24 bg-dark-900 rounded-lg p-2 md:p-3 border border-white/5 opacity-30">
-                                <div class="h-1.5 md:h-2 w-6 md:w-12 bg-white/5 rounded mb-2 md:mb-3"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-                        <span class="text-accent-400 font-bold text-xs md:text-sm">PASO 04</span>
-                        <div class="h-px flex-1 bg-gradient-to-r from-accent-500/30 to-transparent"></div>
-                    </div>
-                    <h3 class="text-lg md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-accent-400 transition">Planifica en Kanban</h3>
-                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">
-                        Pasa tus ideas al tablero visual: planifica, graba y publica con total claridad. Nunca pierdas el ritmo.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Canvas / Generación de Imágenes -->
-    <section class="py-16 md:py-24 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/[0.02] to-transparent"></div>
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="text-center mb-12 md:mb-16 reveal">
-                <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-green-500/30 text-[10px] md:text-xs font-medium text-green-400 mb-3 md:mb-4">TU ESTUDIO CREATIVO</span>
-                <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4 md:mb-6">
-                    Genera fotos profesionales<br class="hidden md:block">
-                    <span class="text-green-400">sin salir de casa</span>
-                </h2>
-                <p class="text-gray-500 text-sm md:text-lg max-w-2xl mx-auto">
-                    Combina personajes, productos, estilos y escenarios en un canvas visual. Sin prompts complicados, sin Photoshop.
-                </p>
-            </div>
-
-            <!-- Desktop Canvas -->
-            <div id="canvas-container" class="hidden lg:block relative rounded-2xl border border-white/10 bg-dark-800/50 backdrop-blur-sm overflow-hidden canvas-glow" style="height: 560px;">
-                <!-- Subtle grid dots background -->
-                <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 32px 32px;"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(74,222,128,0.03),transparent_70%)]"></div>
-
-                <!-- SVG Connection Lines (dynamically drawn by JS) -->
-                <svg id="canvas-svg" class="absolute inset-0 w-full h-full z-[1]" xmlns="http://www.w3.org/2000/svg"></svg>
-
-                <!-- Nodes Layer -->
-                <div class="absolute inset-0 z-[2]">
-
-                    <!-- CHARACTER Node -->
-                    <div id="node-char" class="absolute top-[28px] left-[3%] w-[150px] canvas-node">
-                        <div class="canvas-node-header">CHARACTER <span>×</span></div>
-                        <div class="h-[70px] bg-dark-700/80 rounded-lg flex flex-col items-center justify-center border border-white/5">
-                            <i class="fas fa-user text-gray-700 text-lg"></i>
-                        </div>
-                        <p class="text-[8px] text-gray-600 text-center mt-1">No Character Selected</p>
-                        <button class="canvas-node-btn">↑ Select Character</button>
-                    </div>
-
-                    <!-- PRODUCT Node 1 -->
-                    <div id="node-prod1" class="absolute top-[200px] left-[3%] w-[150px] canvas-node">
-                        <div class="canvas-node-header">PRODUCT <span>×</span></div>
-                        <div class="h-[58px] bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-box-open text-gray-700 text-lg"></i>
-                        </div>
-                        <p class="text-[8px] text-gray-600 text-center mt-1">No Product Selected</p>
-                        <button class="canvas-node-btn">↑ Select Product</button>
-                    </div>
-
-                    <!-- PRODUCT Node 2 -->
-                    <div id="node-prod2" class="absolute top-[370px] left-[3%] w-[150px] canvas-node">
-                        <div class="canvas-node-header">PRODUCT <span>×</span></div>
-                        <div class="h-[45px] bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-box-open text-gray-700"></i>
-                        </div>
-                        <button class="canvas-node-btn">↑ Select Product</button>
-                    </div>
-
-                    <!-- FULL BODY GENERATOR (center) -->
-                    <div id="node-fbg" class="absolute top-[105px] left-[36%] w-[220px] canvas-node" style="border-color: rgba(74, 222, 128, 0.15);">
-                        <div class="canvas-node-header" style="color: rgba(74, 222, 128, 0.7);">FULL BODY GENERATOR <span>×</span></div>
-                        <div class="h-[115px] bg-dark-700/80 rounded-lg flex flex-col items-center justify-center border border-green-500/10">
-                            <div class="w-10 h-10 rounded-full bg-dark-600 flex items-center justify-center mb-2 border border-white/5">
-                                <i class="fas fa-image text-gray-500 text-sm"></i>
-                            </div>
-                            <p class="text-[9px] text-gray-600">Waiting for inputs...</p>
-                        </div>
-                        <div class="flex items-center gap-2 mt-2">
-                            <div class="flex-1 bg-dark-700/80 border border-white/10 rounded px-2 py-1 text-[9px] text-gray-500">Front View</div>
-                            <div class="w-7 h-3.5 rounded-full bg-green-500/30 relative">
-                                <div class="absolute right-0.5 top-0.5 w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                            </div>
-                        </div>
-                        <button class="w-full mt-2 py-2 rounded-lg text-[10px] text-white font-medium" style="background: rgba(74, 222, 128, 0.2); border: 1px solid rgba(74, 222, 128, 0.3);">
-                            GENERATE (3 credits)
-                        </button>
-                    </div>
-
-                    <!-- STYLE Node -->
-                    <div id="node-style" class="absolute bottom-[24px] left-[31%] w-[135px] canvas-node">
-                        <div class="canvas-node-header">STYLE <span>×</span></div>
-                        <div class="h-[62px] bg-dark-700/80 rounded-lg flex flex-col items-center justify-center border border-white/5">
-                            <i class="fas fa-palette text-gray-700 text-lg"></i>
-                        </div>
-                        <p class="text-[8px] text-gray-600 text-center mt-1">No Style Selected</p>
-                        <button class="canvas-node-btn">Change Style</button>
-                    </div>
-
-                    <!-- ENVIRONMENT Node -->
-                    <div id="node-env" class="absolute bottom-[24px] left-[48%] w-[135px] canvas-node">
-                        <div class="canvas-node-header">ENVIRONMENT <span>×</span></div>
-                        <div class="h-[62px] bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-mountain-sun text-gray-700 text-lg"></i>
-                        </div>
-                        <p class="text-[8px] text-gray-600 text-center mt-1">No Environment</p>
-                        <button class="canvas-node-btn">Change Environment</button>
-                    </div>
-
-                    <!-- GENERATOR Output Node -->
-                    <div id="node-gen" class="absolute top-[80px] right-[3%] w-[170px] canvas-node" style="border-color: rgba(74, 222, 128, 0.15);">
-                        <div class="canvas-node-header" style="color: rgba(74, 222, 128, 0.7);">GENERATOR <span>×</span></div>
-                        <div class="h-[125px] bg-dark-700/80 rounded-lg flex flex-col items-center justify-center border border-green-500/10 mb-2">
-                            <i class="fas fa-wand-magic-sparkles text-gray-600 text-2xl mb-2"></i>
-                            <p class="text-[8px] text-gray-600">Ready to generate</p>
-                        </div>
-                        <div class="bg-dark-700/80 border border-white/10 rounded px-2 py-1 text-[9px] text-gray-500 mb-1.5">Fashion Shooting</div>
-                        <div class="flex gap-1.5 mb-1.5">
-                            <span class="flex-1 text-center py-1 bg-dark-700/80 border border-white/10 rounded text-[9px] text-gray-500">3:4</span>
-                            <span class="flex-1 text-center py-1 bg-dark-700/80 border border-white/10 rounded text-[9px] text-gray-500">1K</span>
-                        </div>
-                        <button class="w-full py-2 rounded-lg text-[10px] text-white font-medium" style="background: rgba(74, 222, 128, 0.2); border: 1px solid rgba(74, 222, 128, 0.3);">
-                            GENERATE (3 credits)
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Mobile Canvas -->
-            <div class="lg:hidden">
-                <div class="grid grid-cols-2 gap-3 mb-4">
-                    <div class="canvas-node">
-                        <div class="canvas-node-header">CHARACTER</div>
-                        <div class="h-16 bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-user text-gray-700"></i>
-                        </div>
-                    </div>
-                    <div class="canvas-node">
-                        <div class="canvas-node-header">PRODUCT</div>
-                        <div class="h-16 bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-box-open text-gray-700"></i>
-                        </div>
-                    </div>
-                    <div class="canvas-node">
-                        <div class="canvas-node-header">STYLE</div>
-                        <div class="h-16 bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-palette text-gray-700"></i>
-                        </div>
-                    </div>
-                    <div class="canvas-node">
-                        <div class="canvas-node-header">ENVIRONMENT</div>
-                        <div class="h-16 bg-dark-700/80 rounded-lg flex items-center justify-center border border-white/5">
-                            <i class="fas fa-mountain-sun text-gray-700"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- Arrow -->
-                <div class="flex justify-center my-4">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3);">
-                        <i class="fas fa-arrow-down text-green-400 text-sm"></i>
-                    </div>
-                </div>
-                <!-- Generator -->
-                <div class="canvas-node" style="border-color: rgba(74, 222, 128, 0.15);">
-                    <div class="canvas-node-header" style="color: rgba(74, 222, 128, 0.7);">FULL BODY GENERATOR</div>
-                    <div class="h-28 bg-dark-700/80 rounded-lg flex flex-col items-center justify-center border border-green-500/10">
-                        <i class="fas fa-wand-magic-sparkles text-green-400/50 text-2xl mb-2"></i>
-                        <p class="text-[10px] text-gray-500">Tu imagen profesional</p>
-                    </div>
-                    <button class="w-full mt-2 py-2.5 rounded-lg text-xs text-white font-medium" style="background: rgba(74, 222, 128, 0.25); border: 1px solid rgba(74, 222, 128, 0.4);">
-                        GENERATE (3 credits)
-                    </button>
-                </div>
-            </div>
-
-            <!-- Feature pills -->
-            <div class="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 md:mt-12">
-                <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08]">
-                    <i class="fas fa-user text-green-400/70 text-xs"></i>
-                    <span class="text-xs text-gray-400">Personajes</span>
-                </div>
-                <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08]">
-                    <i class="fas fa-box-open text-green-400/70 text-xs"></i>
-                    <span class="text-xs text-gray-400">Productos</span>
-                </div>
-                <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08]">
-                    <i class="fas fa-palette text-green-400/70 text-xs"></i>
-                    <span class="text-xs text-gray-400">Estilos</span>
-                </div>
-                <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08]">
-                    <i class="fas fa-mountain-sun text-green-400/70 text-xs"></i>
-                    <span class="text-xs text-gray-400">Escenarios</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Final -->
-    <section class="py-20 md:py-32 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 hero-glow opacity-40"></div>
-        <div class="max-w-3xl mx-auto text-center relative z-10 reveal">
-            <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-accent-500/30 text-[10px] md:text-xs font-medium text-accent-400 mb-5 md:mb-7">EMPIEZA HOY</span>
-            <h2 class="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white mb-5 md:mb-7">
-                Deja de crear contenido<br>
-                <span class="text-accent-400">que nadie ve</span>
-            </h2>
-            <p class="text-gray-400 text-base md:text-lg max-w-xl mx-auto mb-8 md:mb-12 leading-relaxed">
-                Únete a +1,000 marcas y creadores que ya usan Influora para crear todo su contenido.
-            </p>
-            
-            <div class="flex flex-col items-center">
-                <div class="promo-tag inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 rounded-full px-3 py-1 mb-4">
-                    <i class="fas fa-fire text-amber-400 text-[10px]"></i>
-                    <span class="text-[10px] md:text-[11px] font-semibold text-amber-300">Créditos dobles para los primeros en suscribirse</span>
-                </div>
-                <form action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" class="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
-                    <div class="relative w-full sm:flex-1">
-                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                        <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl py-3.5 md:py-4 pl-11 pr-4 text-white placeholder-gray-600 text-sm md:text-base focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all duration-300">
-                    </div>
-                    <button type="submit" class="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
-                        Acceso anticipado <i class="fas fa-arrow-right text-xs"></i>
-                    </button>
-                </form>
-            </div>
-            
-        </div>
-    </section>
-
-    <!-- Footer Simple -->
-    <footer class="border-t border-white/[0.04] py-10 md:py-12 px-4 text-center">
-        <div class="flex items-center justify-center gap-2.5 mb-4">
-            <div class="w-7 h-7 rounded-lg bg-accent-500/10 flex items-center justify-center border border-accent-500/20">
-                <i class="fas fa-bolt text-accent-400 text-xs"></i>
-            </div>
-            <span class="font-bold text-gray-300 tracking-tight">Influora</span>
-        </div>
-        <p class="text-gray-600 text-[11px] tracking-wide">Contenido viral, guiones, fotos, videos y más — todo con IA.</p>
-    </footer>
-
-    <!-- Signup Modal (Nav Button) -->
-    <div id="signupModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeSignupModal()"></div>
-        <div class="relative bg-dark-800 border border-accent-500/30 rounded-3xl p-8 max-w-md w-full text-center transform scale-95 transition-transform duration-300 shadow-2xl shadow-accent-500/20" id="signupModalContent">
-            <button onclick="closeSignupModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="w-14 h-14 bg-accent-500/20 rounded-full flex items-center justify-center mx-auto mb-5 border border-accent-500/30">
-                <i class="fas fa-rocket text-accent-400 text-xl"></i>
-            </div>
-            
-            <h3 class="text-xl md:text-2xl font-bold text-white mb-2">
-                Sé de los primeros en enterarte
-            </h3>
-            
-            <p class="text-gray-400 text-sm mb-5 leading-relaxed">
-                Déjanos tu correo y te avisamos en cuanto lancemos. Los primeros en la lista tendrán acceso anticipado y beneficios exclusivos.
-            </p>
-            
-            <div class="promo-tag inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 rounded-full px-3 py-1 mb-5">
-                <i class="fas fa-fire text-amber-400 text-[10px]"></i>
-                <span class="text-[10px] md:text-[11px] font-semibold text-amber-300">Créditos dobles para los primeros en suscribirse</span>
-            </div>
-            
-            <form action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" class="flex flex-col gap-3 w-full">
-                <div class="relative w-full">
-                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                    <input type="email" name="email_address" placeholder="Tu correo electrónico" required class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all duration-300">
-                </div>
-                <button type="submit" class="w-full bg-accent-600 hover:bg-accent-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-accent-600/20 hover:shadow-accent-500/30 text-sm whitespace-nowrap flex items-center justify-center gap-2">
-                    Quiero acceso anticipado <i class="fas fa-arrow-right text-xs"></i>
-                </button>
-            </form>
-            
-            <p class="text-gray-600 text-[11px] mt-4">Sin spam. Solo novedades importantes.</p>
-        </div>
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="logo">Kloutt<span>.</span></a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="radiogroup" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="es" onclick="setLang('es')" aria-pressed="false">ES</button>
+      </div>
+      <a href="#" class="nav-cta" data-i18n="nav_cta" onclick="openSignupModal(); return false;">Get Early Access</a>
     </div>
+  </nav>
 
-    <!-- Success Popup -->
-    <div id="successPopup" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closePopup()"></div>
-        <div class="relative bg-dark-800 border border-accent-500/30 rounded-3xl p-8 max-w-md w-full text-center transform scale-95 transition-transform duration-300 shadow-2xl shadow-accent-500/20" id="popupContent">
-            <button onclick="closePopup()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="w-16 h-16 bg-accent-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-accent-500/30">
-                <i class="fas fa-rocket text-accent-400 text-2xl"></i>
-            </div>
-            
-            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">
-                ¡Estás dentro! 🎉
-            </h3>
-            
-            <p class="text-accent-400 font-semibold mb-4">
-                Tu lugar está reservado
-            </p>
-            
-            <p class="text-gray-400 mb-6 leading-relaxed">
-                Serás de los <span class="text-white font-semibold">primeros en acceder</span> a Influora. 
-                Muy pronto recibirás un correo con acceso exclusivo y novedades que no querrás perderte.
-            </p>
-            
-            <div class="bg-dark-900 rounded-xl p-4 border border-white/5 mb-6">
-                <p class="text-xs text-gray-500 mb-2">MIENTRAS TANTO</p>
-                <p class="text-sm text-gray-300">Revisa tu bandeja de entrada (y spam) para confirmar tu suscripción.</p>
-            </div>
-            
-            <button onclick="closePopup()" class="w-full bg-accent-600 hover:bg-accent-500 text-white py-3 rounded-xl font-semibold transition shadow-lg shadow-accent-500/25">
-                ¡Entendido!
-            </button>
-        </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-mesh"></div>
+    <div class="badge" data-i18n="badge">Coming Soon · Early Access Open</div>
+    <h1 data-i18n="hero_title">Create your <em>AI influencer</em> in&nbsp;minutes</h1>
+    <p class="hero-sub" data-i18n="hero_sub">Launch a virtual creator that posts for you 24/7. No photoshoots, no model fees, no limits. Just your brand, always on.</p>
+    <div class="promo-tag"><span class="promo-icon">&#9889;</span> <span data-i18n="promo_tag">Free credits for the first 100 users</span> <span class="promo-count" data-i18n="promo_spots">Limited</span></div>
+    <form class="email-form" id="waitlist" action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887">
+      <input type="email" name="email_address" data-i18n-placeholder="email_placeholder" placeholder="Enter your email" required />
+      <button type="submit" data-i18n="join_btn">Claim my spot</button>
+    </form>
+    <p class="form-note" data-i18n="form_note">Free early access · No credit card required</p>
+  </section>
+
+  <!-- Showcase -->
+  <section class="showcase">
+    <p class="section-label fade-up" data-i18n="showcase_label">What your AI influencer can do</p>
+    <h2 class="section-title fade-up" data-i18n="showcase_title">Content that looks real, <em>made by AI</em></h2>
+
+    <div class="image-grid">
+      <div class="grid-item wide fade-up">
+        <img src="img/fashion-editorial.png" alt="Fashion Editorial" class="placeholder-img" />
+        <div class="overlay"><span class="overlay-tag" data-i18n="grid_1_tag">Fashion Editorial</span></div>
+      </div>
+      <div class="grid-item fade-up">
+        <img src="img/lifestyle.png" alt="Lifestyle" class="placeholder-img" />
+        <div class="overlay"><span class="overlay-tag" data-i18n="grid_2_tag">Lifestyle</span></div>
+      </div>
+      <div class="grid-item fade-up">
+        <img src="img/product.png" alt="Product" class="placeholder-img" />
+        <div class="overlay"><span class="overlay-tag" data-i18n="grid_3_tag">Product</span></div>
+      </div>
+      <div class="grid-item fade-up">
+        <img src="img/brand-campaing.png" alt="Brand Campaign" class="placeholder-img" />
+        <div class="overlay"><span class="overlay-tag" data-i18n="grid_4_tag">Campaign</span></div>
+      </div>
+      <div class="grid-item fade-up">
+        <img src="img/social-media.png" alt="Social Media" class="placeholder-img" />
+        <div class="overlay"><span class="overlay-tag" data-i18n="grid_5_tag">Social Media</span></div>
+      </div>
+      <div class="grid-item full fade-up">
+        <img src="img/workflow.png" alt="Workflow" class="placeholder-img" />
+        <div class="overlay"><span class="overlay-tag" data-i18n="grid_6_tag">Design Workflow</span></div>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // ─── Particles Animation ───
-        (function() {
-            const canvas = document.getElementById('particles-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            const PARTICLE_COUNT = 60;
-            const CONNECTION_DIST = 120;
-            let w, h, dpr;
+  <!-- Features -->
+  <section class="features">
+    <div class="features-grid">
+      <div class="feature-item fade-up">
+        <div class="feature-icon">⟐</div>
+        <h3 data-i18n="feat_1_title">Your Face, Your Rules</h3>
+        <p data-i18n="feat_1_desc">Design a unique AI character and keep it consistent across hundreds of posts. Same person, endless scenarios.</p>
+      </div>
+      <div class="feature-item fade-up">
+        <div class="feature-icon">◎</div>
+        <h3 data-i18n="feat_2_title">Content on Autopilot</h3>
+        <p data-i18n="feat_2_desc">Skip the studio. Generate fashion shoots, lifestyle posts, and product placements in just a few clicks.</p>
+      </div>
+      <div class="feature-item fade-up">
+        <div class="feature-icon">⬡</div>
+        <h3 data-i18n="feat_3_title">Ready to Publish</h3>
+        <p data-i18n="feat_3_desc">Every image comes out campaign-ready. Export directly to your social calendar and start posting.</p>
+      </div>
+    </div>
+  </section>
 
-            function resize() {
-                const section = canvas.parentElement;
-                dpr = window.devicePixelRatio || 1;
-                w = section.offsetWidth;
-                h = section.offsetHeight;
-                canvas.width = w * dpr;
-                canvas.height = h * dpr;
-                canvas.style.width = w + 'px';
-                canvas.style.height = h + 'px';
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            }
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <h2 class="fade-up" data-i18n="cta_title">Your AI influencer is <em>waiting</em></h2>
+    <p class="fade-up" data-i18n="cta_sub">Join now and be the first to launch your own virtual creator.</p>
+    <div class="promo-tag fade-up"><span class="promo-icon">&#9889;</span> <span data-i18n="promo_tag">Free credits for the first 100 users</span> <span class="promo-count" data-i18n="promo_spots">Limited</span></div>
+    <form class="email-form fade-up" action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887" style="margin: 0 auto;">
+      <input type="email" name="email_address" data-i18n-placeholder="email_placeholder" placeholder="Enter your email" required />
+      <button type="submit" data-i18n="join_btn">Claim my spot</button>
+    </form>
+  </section>
 
-            function createParticles() {
-                particles = [];
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push({
-                        x: Math.random() * w,
-                        y: Math.random() * h,
-                        vx: (Math.random() - 0.5) * 0.3,
-                        vy: (Math.random() - 0.5) * 0.3,
-                        r: Math.random() * 1.5 + 0.5,
-                        opacity: Math.random() * 0.3 + 0.1
-                    });
-                }
-            }
+  <!-- Signup Modal (Nav Button) -->
+  <div id="signupModal" class="modal-overlay">
+    <div class="modal-backdrop" onclick="closeSignupModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeSignupModal()">&times;</button>
+      <div class="modal-icon">&#9889;</div>
+      <h3 class="modal-title" data-i18n="modal_title">Get in <em>early</em></h3>
+      <p class="modal-desc" data-i18n="modal_desc">Drop your email and we'll let you know the moment Kloutt is live. Early users get free credits and priority access.</p>
+      <div class="promo-tag" style="margin: 0 auto 20px;"><span class="promo-icon">&#9889;</span> <span data-i18n="promo_tag">Free credits for the first 100 users</span> <span class="promo-count" data-i18n="promo_spots">Limited</span></div>
+      <form class="modal-form" action="https://app.kit.com/forms/9044887/subscriptions" method="post" data-sv-form="9044887">
+        <input type="email" name="email_address" data-i18n-placeholder="email_placeholder" placeholder="Enter your email" required />
+        <button type="submit" data-i18n="modal_btn">Get Early Access</button>
+      </form>
+      <p class="modal-note" data-i18n="modal_note">No spam. Only important updates.</p>
+    </div>
+  </div>
 
-            function animate() {
-                ctx.clearRect(0, 0, w, h);
-                
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    if (p.x < 0) p.x = w;
-                    if (p.x > w) p.x = 0;
-                    if (p.y < 0) p.y = h;
-                    if (p.y > h) p.y = 0;
+  <!-- Success Popup -->
+  <div id="successPopup" class="modal-overlay">
+    <div class="modal-backdrop" onclick="closePopup()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closePopup()">&times;</button>
+      <div class="modal-icon">&#10003;</div>
+      <h3 class="modal-title" data-i18n="popup_title">You're <em>in!</em></h3>
+      <p class="modal-desc" data-i18n="popup_desc">Your spot is reserved. You'll be among the <strong style="color: var(--text);">first to access</strong> Kloutt. We'll send you an email soon with exclusive news and early access.</p>
+      <div class="modal-highlight-box">
+        <div class="label" data-i18n="popup_meanwhile">Meanwhile</div>
+        <p data-i18n="popup_check">Check your inbox (and spam) to confirm your subscription.</p>
+      </div>
+      <button class="modal-cta-btn" onclick="closePopup()" data-i18n="popup_btn">Got it!</button>
+    </div>
+  </div>
 
-                    // Draw particle
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(96, 165, 250, ${p.opacity})`;
-                    ctx.fill();
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">Kloutt<span>.</span></div>
+    <div class="footer-links">
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+      <a href="#" data-i18n="footer_contact">Contact</a>
+    </div>
+    <span class="footer-copy" data-i18n="footer_copy">© 2026 Kloutt. All rights reserved.</span>
+  </footer>
 
-                    // Draw connections
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const p2 = particles[j];
-                        const dx = p.x - p2.x;
-                        const dy = p.y - p2.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < CONNECTION_DIST) {
-                            const alpha = (1 - dist / CONNECTION_DIST) * 0.08;
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(animate);
-            }
+  <script>
+    // ─── i18n Translations ───
+    const translations = {
+      en: {
+        nav_cta: "Get Early Access",
+        badge: "Coming Soon · Early Access Open",
+        hero_title: 'Create your <em>AI influencer</em> in&nbsp;minutes',
+        hero_sub: "Launch a virtual creator that posts for you 24/7. No photoshoots, no model fees, no limits. Just your brand, always on.",
+        email_placeholder: "Enter your email",
+        join_btn: "Claim my spot",
+        form_note: "Free early access · No credit card required",
+        success_msg: "You're on the list. We'll be in touch soon.",
+        showcase_label: "What your AI influencer can do",
+        showcase_title: 'Content that looks real, <em>made by AI</em>',
+        grid_1_label: "Your AI influencer shoot here",
+        grid_1_tag: "Fashion Editorial",
+        grid_2_label: "Lifestyle content",
+        grid_2_tag: "Lifestyle",
+        grid_3_label: "Product placement",
+        grid_3_tag: "Product",
+        grid_4_label: "Brand campaigns",
+        grid_4_tag: "Campaign",
+        grid_5_label: "Social content",
+        grid_5_tag: "Social Media",
+        grid_6_label: "Workflow preview · drag & connect nodes",
+        grid_6_tag: "Design Workflow",
+        feat_1_title: "Your Face, Your Rules",
+        feat_1_desc: "Design a unique AI character and keep it consistent across hundreds of posts. Same person, endless scenarios.",
+        feat_2_title: "Content on Autopilot",
+        feat_2_desc: "Skip the studio. Generate fashion shoots, lifestyle posts, and product placements in just a few clicks.",
+        feat_3_title: "Ready to Publish",
+        feat_3_desc: "Every image comes out campaign-ready. Export directly to your social calendar and start posting.",
+        cta_title: 'Your AI influencer is <em>waiting</em>',
+        cta_sub: "Join now and be the first to launch your own virtual creator.",
+        footer_contact: "Contact",
+        footer_copy: "© 2026 Kloutt. All rights reserved.",
+        modal_title: 'Get in <em>early</em>',
+        modal_desc: "Drop your email and we'll let you know the moment Kloutt is live. Early users get free credits and priority access.",
+        modal_btn: "Get Early Access",
+        modal_note: "No spam. Only important updates.",
+        popup_title: "You're <em>in!</em>",
+        popup_desc: 'Your spot is reserved. You\'ll be among the <strong style="color: var(--text);">first to access</strong> Kloutt. We\'ll send you an email soon with exclusive news and early access.',
+        popup_meanwhile: "Meanwhile",
+        popup_check: "Check your inbox (and spam) to confirm your subscription.",
+        popup_btn: "Got it!",
+        promo_tag: "Free credits for the first 100 users",
+        promo_spots: "Limited",
+      },
+      es: {
+        nav_cta: "Acceso Anticipado",
+        badge: "Próximamente · Acceso Anticipado Abierto",
+        hero_title: 'Crea tu <em>influencer IA</em> en&nbsp;minutos',
+        hero_sub: "Lanza un creador virtual que publica por ti 24/7. Sin sesiones de fotos, sin modelos, sin límites. Tu marca, siempre activa.",
+        email_placeholder: "Ingresa tu email",
+        join_btn: "Reservar mi lugar",
+        form_note: "Acceso anticipado gratis · Sin tarjeta de crédito",
+        success_msg: "Estás en la lista. Te contactaremos pronto.",
+        showcase_label: "Lo que tu influencer IA puede hacer",
+        showcase_title: 'Contenido que parece real, <em>hecho con IA</em>',
+        grid_1_label: "Tu sesión de influencer IA aquí",
+        grid_1_tag: "Editorial de Moda",
+        grid_2_label: "Contenido lifestyle",
+        grid_2_tag: "Lifestyle",
+        grid_3_label: "Product placement",
+        grid_3_tag: "Producto",
+        grid_4_label: "Campañas de marca",
+        grid_4_tag: "Campaña",
+        grid_5_label: "Contenido social",
+        grid_5_tag: "Redes Sociales",
+        grid_6_label: "Vista previa del workflow · arrastra y conecta nodos",
+        grid_6_tag: "Flujo de Diseño",
+        feat_1_title: "Tu Personaje, Tus Reglas",
+        feat_1_desc: "Diseña un personaje IA único y mantenlo consistente en cientos de publicaciones. Misma persona, escenarios infinitos.",
+        feat_2_title: "Contenido en Piloto Automático",
+        feat_2_desc: "Olvídate del estudio. Genera sesiones de moda, posts de lifestyle y product placements con unos pocos clics.",
+        feat_3_title: "Listo para Publicar",
+        feat_3_desc: "Cada imagen sale lista para campaña. Exporta directo a tu calendario social y empieza a publicar.",
+        cta_title: 'Tu influencer IA te está <em>esperando</em>',
+        cta_sub: "Únete ahora y sé el primero en lanzar tu propio creador virtual.",
+        footer_contact: "Contacto",
+        footer_copy: "© 2026 Kloutt. Todos los derechos reservados.",
+        modal_title: 'Entra <em>antes que nadie</em>',
+        modal_desc: "Déjanos tu correo y te avisamos en cuanto Kloutt esté disponible. Los primeros usuarios reciben créditos gratis y acceso prioritario.",
+        modal_btn: "Quiero acceso anticipado",
+        modal_note: "Sin spam. Solo novedades importantes.",
+        popup_title: "¡Estás <em>dentro!</em>",
+        popup_desc: 'Tu lugar está reservado. Serás de los <strong style="color: var(--text);">primeros en acceder</strong> a Kloutt. Muy pronto recibirás un correo con acceso exclusivo y novedades que no querrás perderte.',
+        popup_meanwhile: "Mientras tanto",
+        popup_check: "Revisa tu bandeja de entrada (y spam) para confirmar tu suscripción.",
+        popup_btn: "¡Entendido!",
+        promo_tag: "Créditos gratis para los primeros 100 usuarios",
+        promo_spots: "Limitado",
+      }
+    };
 
-            resize();
-            createParticles();
-            animate();
-            window.addEventListener('resize', () => { resize(); createParticles(); });
-        })();
+    let currentLang = 'en';
 
-        // ─── Canvas Node Connections ───
-        (function() {
-            function drawConnections() {
-                const container = document.getElementById('canvas-container');
-                const svg = document.getElementById('canvas-svg');
-                if (!container || !svg) return;
+    // ─── Auto-detect language ───
+    function detectLanguage() {
+      const saved = localStorage.getItem('kloutt-lang');
+      if (saved && translations[saved]) return saved;
+      const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+      if (browserLang.startsWith('es')) return 'es';
+      return 'en';
+    }
 
-                const cRect = container.getBoundingClientRect();
-                const w = cRect.width;
-                const h = cRect.height;
+    // ─── Apply translations ───
+    function applyTranslations(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.documentElement.lang = lang;
 
-                function getRect(id) {
-                    const el = document.getElementById(id);
-                    if (!el) return null;
-                    const r = el.getBoundingClientRect();
-                    return {
-                        l: r.left - cRect.left,
-                        r: r.right - cRect.left,
-                        t: r.top - cRect.top,
-                        b: r.bottom - cRect.top,
-                        cx: (r.left + r.right) / 2 - cRect.left,
-                        cy: (r.top + r.bottom) / 2 - cRect.top
-                    };
-                }
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerHTML = t[key];
+      });
 
-                const ch = getRect('node-char');
-                const p1 = getRect('node-prod1');
-                const p2 = getRect('node-prod2');
-                const fb = getRect('node-fbg');
-                const st = getRect('node-style');
-                const en = getRect('node-env');
-                const gn = getRect('node-gen');
-                if (!ch || !p1 || !p2 || !fb || !st || !en || !gn) return;
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.placeholder = t[key];
+      });
 
-                svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-                svg.setAttribute('preserveAspectRatio', 'none');
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        const isActive = btn.getAttribute('data-lang') === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+      });
 
-                const lines = [
-                    // Character → FBG (right edge → left edge, upper third)
-                    { x1: ch.r, y1: ch.cy, x2: fb.l, y2: fb.t + (fb.b - fb.t) * 0.28 },
-                    // Product1 → FBG (right edge → left edge, middle)
-                    { x1: p1.r, y1: p1.cy, x2: fb.l, y2: fb.cy },
-                    // Product2 → FBG (right edge → left edge, lower third)
-                    { x1: p2.r, y1: p2.cy, x2: fb.l, y2: fb.t + (fb.b - fb.t) * 0.72 },
-                    // Style → FBG (top center → bottom, left of center)
-                    { x1: st.cx, y1: st.t, x2: fb.cx - 20, y2: fb.b, vert: true },
-                    // Environment → FBG (top center → bottom, right of center)
-                    { x1: en.cx, y1: en.t, x2: fb.cx + 20, y2: fb.b, vert: true },
-                    // FBG → Generator (right edge → left edge)
-                    { x1: fb.r, y1: fb.cy, x2: gn.l, y2: gn.cy }
-                ];
+      localStorage.setItem('kloutt-lang', lang);
+    }
 
-                let html = '';
-                lines.forEach(c => {
-                    let d;
-                    if (c.vert) {
-                        const my = (c.y1 + c.y2) / 2;
-                        d = 'M ' + c.x1 + ' ' + c.y1 + ' C ' + c.x1 + ' ' + my + ' ' + c.x2 + ' ' + my + ' ' + c.x2 + ' ' + c.y2;
-                    } else {
-                        const mx = (c.x1 + c.x2) / 2;
-                        d = 'M ' + c.x1 + ' ' + c.y1 + ' C ' + mx + ' ' + c.y1 + ' ' + mx + ' ' + c.y2 + ' ' + c.x2 + ' ' + c.y2;
-                    }
-                    html += '<path d="' + d + '" class="connection-line"/>';
-                    html += '<circle cx="' + c.x1 + '" cy="' + c.y1 + '" r="3.5" class="connection-dot"/>';
-                    html += '<circle cx="' + c.x2 + '" cy="' + c.y2 + '" r="4" class="connection-dot"/>';
-                });
+    // ─── Set language (called by buttons) ───
+    function setLang(lang) {
+      if (lang === currentLang) return;
+      applyTranslations(lang);
+    }
 
-                svg.innerHTML = html;
-            }
+    // ─── Signup Modal ───
+    function openSignupModal() {
+      document.getElementById('signupModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
-            // Draw on load and resize
-            drawConnections();
-            window.addEventListener('resize', drawConnections);
-            // Redraw after fonts/layout settle
-            setTimeout(drawConnections, 100);
-            setTimeout(drawConnections, 500);
-        })();
+    function closeSignupModal() {
+      document.getElementById('signupModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
 
-        // ─── Scroll Reveal ───
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // ─── Success Popup ───
+    function showPopup() {
+      document.getElementById('successPopup').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
-        // ─── Signup Modal ───
-        function openSignupModal() {
-            const modal = document.getElementById('signupModal');
-            const content = document.getElementById('signupModalContent');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            modal.classList.add('opacity-100', 'pointer-events-auto');
-            content.classList.remove('scale-95');
-            content.classList.add('scale-100');
-            document.body.style.overflow = 'hidden';
+    function closePopup() {
+      document.getElementById('successPopup').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ─── Kit Form Submission ───
+    document.querySelectorAll('form[data-sv-form]').forEach(form => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const emailInput = form.querySelector('input[name="email_address"]');
+        const button = form.querySelector('button[type="submit"]');
+        const originalHTML = button.innerHTML;
+
+        button.innerHTML = 'Sending...';
+        button.disabled = true;
+        button.style.opacity = '0.7';
+
+        try {
+          await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ email_address: emailInput.value })
+          });
+
+          emailInput.value = '';
+          button.innerHTML = originalHTML;
+          button.disabled = false;
+          button.style.opacity = '1';
+          closeSignupModal();
+          showPopup();
+
+        } catch (error) {
+          button.innerHTML = 'Error — try again';
+          button.style.background = '#ef4444';
+
+          setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.style.background = '';
+            button.disabled = false;
+            button.style.opacity = '1';
+          }, 3000);
         }
-        
-        function closeSignupModal() {
-            const modal = document.getElementById('signupModal');
-            const content = document.getElementById('signupModalContent');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modal.classList.remove('opacity-100', 'pointer-events-auto');
-            content.classList.add('scale-95');
-            content.classList.remove('scale-100');
-            document.body.style.overflow = '';
-        }
+      });
+    });
 
-        // ─── Popup ───
-        function showPopup() {
-            const popup = document.getElementById('successPopup');
-            const content = document.getElementById('popupContent');
-            popup.classList.remove('opacity-0', 'pointer-events-none');
-            popup.classList.add('opacity-100', 'pointer-events-auto');
-            content.classList.remove('scale-95');
-            content.classList.add('scale-100');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closePopup() {
-            const popup = document.getElementById('successPopup');
-            const content = document.getElementById('popupContent');
-            popup.classList.add('opacity-0', 'pointer-events-none');
-            popup.classList.remove('opacity-100', 'pointer-events-auto');
-            content.classList.add('scale-95');
-            content.classList.remove('scale-100');
-            document.body.style.overflow = '';
-        }
+    // ─── Scroll reveal ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        // ─── Kit Form Submission ───
-        document.querySelectorAll('form[data-sv-form]').forEach(form => {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const emailInput = form.querySelector('input[name="email_address"]');
-                const button = form.querySelector('button[type="submit"]');
-                const originalHTML = button.innerHTML;
-                
-                button.innerHTML = '<i class="fas fa-circle-notch fa-spin text-sm"></i> Enviando...';
-                button.disabled = true;
-                button.style.opacity = '0.7';
-                
-                try {
-                    await fetch(form.action, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: new URLSearchParams({ email_address: emailInput.value })
-                    });
-                    
-                    emailInput.value = '';
-                    button.innerHTML = originalHTML;
-                    button.disabled = false;
-                    button.style.opacity = '1';
-                    closeSignupModal();
-                    showPopup();
-                    
-                } catch (error) {
-                    button.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error, intenta de nuevo';
-                    button.classList.replace('bg-accent-600', 'bg-red-600');
-                    
-                    setTimeout(() => {
-                        button.innerHTML = originalHTML;
-                        button.classList.replace('bg-red-600', 'bg-accent-600');
-                        button.disabled = false;
-                        button.style.opacity = '1';
-                    }, 3000);
-                }
-            });
-        });
-    </script>
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ─── Init ───
+    applyTranslations(detectLanguage());
+  </script>
 </body>
 </html>
